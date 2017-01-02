@@ -35,7 +35,7 @@
                 {
                     ConnectorClient client = new ConnectorClient(new Uri(activity.ServiceUrl));
 
-                    ResourceResponse conversation;
+                    ConversationResourceResponse conversation;
 
                     try
                     {
