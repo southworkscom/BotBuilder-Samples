@@ -1,4 +1,4 @@
-exports.createTelemetry = (session, properties = null) => {
+exports.createTelemetry = (session, properties) => {
     var data = {
         conversationData: JSON.stringify(session.conversationData),
         privateConversationData: JSON.stringify(session.privateConversationData),
