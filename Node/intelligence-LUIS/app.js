@@ -22,8 +22,7 @@ server.post('/api/messages', connector.listen());
 
 // You can provide your own model by specifing the 'LUIS_MODEL_URL' environment variable
 // This Url can be obtained by uploading or creating your model from the LUIS portal: https://www.luis.ai/
-const LuisModelUrl = process.env.LUIS_MODEL_URL ||
-    'https://api.projectoxford.ai/luis/v1/application?id=162bf6ee-379b-4ce4-a519-5f5af90086b5&subscription-key=11be6373fca44ded80fbe2afa8597c18';
+const LuisModelUrl = process.env.LUIS_MODEL_URL;
 
 // Main dialog with LUIS
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
