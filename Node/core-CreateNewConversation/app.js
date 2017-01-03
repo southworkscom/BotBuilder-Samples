@@ -42,10 +42,8 @@ setInterval(function () {
 }, 5000);
 
 bot.dialog('/', function (session) {
-    var msg = session.message;
-
     // store user's address
-    var address = msg.address;
+    var address = session.message.address;
     userStore.push(address);
 
     // end current dialog
