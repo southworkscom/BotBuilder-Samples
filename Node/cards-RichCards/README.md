@@ -10,7 +10,7 @@ A sample bot to renders several types of cards as attachments.
 
 The minimum prerequisites to run this sample are:
 * Latest Node.js with NPM. Download it from [here](https://nodejs.org/en/download/).
-* The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://aka.ms/bf-bc-emulator). Please refer to [this documentation article](https://docs.botframework.com/en-us/csharp/builder/sdkreference/gettingstarted.html#emulator) to know more about the Bot Framework Emulator.
+* The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://emulator.botframework.com/). Please refer to [this documentation article](https://github.com/microsoft/botframework-emulator/wiki/Getting-Started) to know more about the Bot Framework Emulator.
 * **[Recommended]** Visual Studio Code for IntelliSense and debugging, download it from [here](https://code.visualstudio.com/) for free.
 
 ### Code Highlights
@@ -90,7 +90,7 @@ function createReceiptCard(session) {
 #### Sign-In Card
 The Sign-In card is a card representing a request to sign in the user. Check out the `createSigninCard` function in [app.js](app.js#L101-L105) class for a Sign-In Card sample.
 
-> Note: The sign in card can be used to initiate an authentication flow which is beyond this sample. For a complete authentication flow sample take a look to the [AuthBot](https://github.com/matvelloso/authbot) (Please, notice the SimpleFacebookAuthBot sample is currently in C# only).
+> Note: The sign in card can be used to initiate an authentication flow which is beyond this sample. For a complete authentication flow sample take a look at [AuthBot](https://github.com/MicrosoftDX/AuthBot) (Please, notice the samples are currently in C# only).
 
 ````JavaScript
 function createSigninCard(session) {
@@ -136,6 +136,7 @@ To get more information about how to get started in Bot Builder for Node and Att
 * [ThumbnailCard](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.thumbnailcard.html)
 * [ReceiptCard](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.receiptcard.html)
 * [SigninCard](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.signincard.html)
+* [Adding Attachments to a Message](https://docs.botframework.com/en-us/core-concepts/attachments)
 * [Message.addAttachment](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.message.html#addattachment)
 * [Attachment](https://docs.botframework.com/en-us/node/builder/chat-reference/interfaces/_botbuilder_d_.iattachment.html)
 
