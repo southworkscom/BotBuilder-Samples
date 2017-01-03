@@ -45,7 +45,7 @@ namespace LuisBot.Dialogs
         {
 
             var message = await activity;
-            await context.PostAsync($"Welcome to the Hotels finder! we are analyzing your message: '{message.Text}'...");
+            await context.PostAsync($"Welcome to the Hotels finder! We are analyzing your message: '{message.Text}'...");
 
             var hotelsQuery = new HotelsQuery();
 
