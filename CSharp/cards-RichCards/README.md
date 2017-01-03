@@ -105,7 +105,7 @@ private static Attachment GetReceiptCard()
 #### Sign-In Card
 The Sign-In card is a card representing a request to sign in the user. Check out the `GetSigninCard` method in the [CardsDialog](CardsDialog.cs#L124-L133) class for a Sign-In Card sample.
 
-> Note: The sign in card can be used to initiate an authentication flow which is beyond this sample. For a complete authentication flow sample take a look to the [AuthBot](https://github.com/matvelloso/authbot).
+> Note: The sign in card can be used to initiate an authentication flow which is beyond this sample. For a complete authentication flow sample take a look at [AuthBot](https://github.com/MicrosoftDX/AuthBot).
 
 ````C#
 private static Attachment GetSigninCard()
