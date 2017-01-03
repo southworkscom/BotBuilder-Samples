@@ -20,7 +20,7 @@ var FacebookDataModels = require('./facebook-channeldata');
 // Root dialog
 bot.dialog('/', function (session) {
 
-    session.send('Looking into your upcoming flights to see if you check-in on any of those...');
+    session.send('Looking into your upcoming flights to see if you can check-in on any of those...');
 
     var now = new Date();
 
