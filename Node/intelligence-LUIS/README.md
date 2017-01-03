@@ -10,7 +10,7 @@ A sample bot using IntentDialog to integrate with a LUIS.ai application.
 
 The minimum prerequisites to run this sample are:
 * Latest Node.js with NPM. Download it from [here](https://nodejs.org/en/download/).
-* The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://aka.ms/bf-bc-emulator). Please refer to [this documentation article](https://docs.botframework.com/en-us/csharp/builder/sdkreference/gettingstarted.html#emulator) to know more about the Bot Framework Emulator.
+* The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://emulator.botframework.com/). Please refer to [this documentation article](https://github.com/microsoft/botframework-emulator/wiki/Getting-Started) to know more about the Bot Framework Emulator.
 * **[Recommended]** Visual Studio Code for IntelliSense and debugging, download it from [here](https://code.visualstudio.com/) for free.
 
 #### LUIS Application
@@ -22,7 +22,7 @@ In the case you choose to import the application, the first step to using LUIS i
 
 Once you imported the application you'll need to "train" the model ([Training](https://www.luis.ai/Help#Training)) before you can "Publish" the model in an HTTP endpoint. For more information, take a look at [Publishing a Model](https://www.luis.ai/Help#PublishingModel).
 
-Finally, edit [app.js](app.js#L21-L22) file and update the `LuisModelUrl` variable, or if you are using Visual Studio Code to run the sample edit [launch.json](.vscode/launch.json#L21) and update the `LUIS_MODEL_URL` environment variable.
+Finally, edit the [.env](.env#L5) file and update the `LUIS_MODEL_URL` variable with your's Model URL.
 
 #### Where to find the Model URL
 
@@ -150,13 +150,13 @@ intents.onDefault((session) => {
 
 ### Spelling Correction
 
-IF you want to enable spelling correction, set the `IS_SPELL_CORRECTION_ENABLED` key to `true` in the [.env](.env) file.
+If you want to enable spelling correction, set the `IS_SPELL_CORRECTION_ENABLED` key to `true` in the [.env](.env) file.
 
 Microsoft Bing Spell Check API provides a module that allows you to to correct the spelling of the text. Check out the [reference](https://dev.cognitive.microsoft.com/docs/services/56e73033cf5ff80c2008c679/operations/56e73036cf5ff81048ee6727) to know more about the modules available. 
 
 [spell-service.js](spell-service.js) is the core component illustrating how to call the Bing Spell Check RESTful API.
 
-In this sample we added spell correction as a middleware. Check out the middleware in [app.js](app.js).
+In this sample we added spell correction as a middleware. Check out the middleware in [app.js](app.js#L99-L114).
 
 ````JavaScript
 if (process.env.IS_SPELL_CORRECTION_ENABLED == "true") {
