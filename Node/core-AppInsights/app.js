@@ -3,7 +3,7 @@ var restify = require('restify');
 require('dotenv-extended').load();
 var telemetryModule = require('./telemetry-module.js');
 
-var appInsights = require("applicationinsights");
+var appInsights = require('applicationinsights');
 appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
 var appInsightsClient = appInsights.getClient();
 
@@ -37,14 +37,14 @@ bot.dialog('/', function (session) {
     // initialize default city
     if (!session.conversationData[CityKey]) {
         session.conversationData[CityKey] = 'Seattle';
-        
+
         telemetry.setDefault = true;
-    } 
+    }
 
     var defaultCity = session.conversationData[CityKey];
     session.send('Welcome to the Search City bot. I\'m currently configured to search for things in %s', defaultCity);
 
-    appInsightsClient.trackTrace("start", telemetry);
+    appInsightsClient.trackTrace('start', telemetry);
 
     session.beginDialog('/search');
 });
@@ -71,11 +71,11 @@ bot.dialog('/search', new builder.IntentDialog()
 
         } finally {
             var resumeAfterPromptTelemetry = telemetryModule.createTelemetry(session);
-            appInsightsClient.trackTrace("resumeAfterPrompt", resumeAfterPromptTelemetry);
+            appInsightsClient.trackTrace('resumeAfterPrompt', resumeAfterPromptTelemetry);
         }
 
         next();
-        
+
     }).matches(/^current city/i, function (session) {
         // print city settings
         var userName = session.userData[UserNameKey];
@@ -91,7 +91,7 @@ bot.dialog('/search', new builder.IntentDialog()
         }
 
         var telemetry = telemetryModule.createTelemetry(session);
-        appInsightsClient.trackEvent("current city", telemetry);
+        appInsightsClient.trackEvent('current city', telemetry);
 
     }).matches(/^change city to (.*)/i, function (session, args) {
         // change default city
@@ -101,7 +101,7 @@ bot.dialog('/search', new builder.IntentDialog()
         session.send('All set %s. From now on, all my searches will be for things in %s.', userName, newCity);
 
         var telemetry = telemetryModule.createTelemetry(session);
-        appInsightsClient.trackEvent("change city to", telemetry);
+        appInsightsClient.trackEvent('change city to', telemetry);
 
     }).matches(/^change my city to (.*)/i, function (session, args) {
         // change user's city
@@ -110,7 +110,7 @@ bot.dialog('/search', new builder.IntentDialog()
         var userName = session.userData[UserNameKey];
         session.send('All set %s. I have overridden the city to %s just for you', userName, newCity);
         var telemetry = telemetryModule.createTelemetry(session);
-        appInsightsClient.trackEvent("change my city to", telemetry);
+        appInsightsClient.trackEvent('change my city to', telemetry);
 
     }).matches(/^reset/i, function (session, args) {
         // reset data
@@ -134,14 +134,14 @@ bot.dialog('/search', new builder.IntentDialog()
 
         } catch (error) {
             measuredEventTelemetry.exception = error.toString();
-            appInsightsClient.trackException("search", t)
+            appInsightsClient.trackException('search', t)
 
         } finally {
             var timerEnd = process.hrtime(timerStart);
-            measuredEventTelemetry.metrics = (timerEnd[0], timerEnd[1]/1000000);
-            appInsightsClient.trackEvent("timeTaken", measuredEventTelemetry);
+            measuredEventTelemetry.metrics = (timerEnd[0], timerEnd[1] / 1000000);
+            appInsightsClient.trackEvent('timeTaken', measuredEventTelemetry);
 
-        }        
+        }
     }));
 
 bot.dialog('/askUserName', new builder.SimpleDialog(function (session, results) {
@@ -152,7 +152,7 @@ bot.dialog('/askUserName', new builder.SimpleDialog(function (session, results) 
 
         var telemetry = telemetryModule.createTelemetry(session);
         telemetry.userName = results.response; // You can add properties after-the-fact as well
-        appInsightsClient.trackEvent("new user", telemetry);
+        appInsightsClient.trackEvent('new user', telemetry);
 
         //  end the current dialog and replace it with  '/search' dialog
         session.replaceDialog('/search');
