@@ -29,7 +29,7 @@ var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     .matches('SearchHotels', [
         function (session, args, next) {
-            session.send('Welcome to the Hotels finder! we are analyzing your message: \'%s\'', session.message.text);
+            session.send('Welcome to the Hotels finder! We are analyzing your message: \'%s\'', session.message.text);
 
             // try extracting entities
             var cityEntity = builder.EntityRecognizer.findEntity(args.entities, 'builtin.geography.city');
@@ -96,7 +96,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
         session.send('Sorry, I did not understand \'%s\'. Type \'help\' if you need assistance.', session.message.text);
     });
 
-if (process.env.IS_SPELL_CORRECTION_ENABLED == "true") {
+if (process.env.IS_SPELL_CORRECTION_ENABLED == 'true') {
     bot.use({
         botbuilder: function (session, next) {
             spellService
@@ -110,7 +110,7 @@ if (process.env.IS_SPELL_CORRECTION_ENABLED == "true") {
                     next();
                 });
         }
-    })
+    });
 }
 
 bot.dialog('/', intents);
