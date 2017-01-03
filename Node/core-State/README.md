@@ -10,7 +10,7 @@ A stateless sample bot tracking context of a conversation.
 
 The minimum prerequisites to run this sample are:
 * Latest Node.js with NPM. Download it from [here](https://nodejs.org/en/download/).
-* The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://aka.ms/bf-bc-emulator). Please refer to [this documentation article](https://docs.botframework.com/en-us/csharp/builder/sdkreference/gettingstarted.html#emulator) to know more about the Bot Framework Emulator.
+* The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://emulator.botframework.com/). Please refer to [this documentation article](https://github.com/microsoft/botframework-emulator/wiki/Getting-Started) to know more about the Bot Framework Emulator.
 * **[Recommended]** Visual Studio Code for IntelliSense and debugging, download it from [here](https://code.visualstudio.com/) for free.
 
 ### Code Highlights
@@ -97,6 +97,7 @@ When a another user arrives to the conversation (In the Bot Framework Emulator t
 To get more information about how to get started in Bot Builder for Node and Dialogs please review the following resources:
 * [Bot Builder for Node.js Reference](https://docs.botframework.com/en-us/node/builder/overview/#navtitle)
 * [Adding Dialogs and Memory](https://docs.botframework.com/en-us/node/builder/guides/core-concepts/#adding-dialogs-and-memory)
+* [Saving User State Data](https://docs.botframework.com/en-us/core-concepts/userdata)
 * [session.userData](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.session.html#userdata)
 * [session.conversationData](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.session.html#conversationdata)
 * [session.privateConversationData](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.session.html#privateconversationdata)
