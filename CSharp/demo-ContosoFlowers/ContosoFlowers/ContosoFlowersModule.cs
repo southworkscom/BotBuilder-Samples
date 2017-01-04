@@ -5,8 +5,9 @@
     using BotAssets.Dialogs;
     using Dialogs;
     using Microsoft.Bot.Builder.Dialogs;
-    using Microsoft.Bot.Builder.Dialogs.Internals;
     using Microsoft.Bot.Builder.Internals.Fibers;
+    using Microsoft.Bot.Builder.Scorables;
+    using Microsoft.Bot.Connector;
     using Services.Models;
 
     public class ContosoFlowersModule : Module
@@ -25,7 +26,7 @@
                 .InstancePerDependency();
 
             builder.RegisterType<SettingsScorable>()
-                .As<IScorable<double>>()
+                .As<IScorable<IActivity, double>>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<FlowerCategoriesDialog>()

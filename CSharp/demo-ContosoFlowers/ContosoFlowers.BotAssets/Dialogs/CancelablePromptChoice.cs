@@ -52,7 +52,8 @@
             return base.TryParse(message, out result);
         }
 
-        protected override IMessageActivity MakePrompt(IDialogContext context, string prompt, IList<T> options = null)
+
+        protected override IMessageActivity MakePrompt(IDialogContext context, string prompt, IReadOnlyList<T> options = null, IReadOnlyList<string> descriptions = null)
         {
             prompt += Environment.NewLine + (promptOptions.CancelPrompt ?? promptOptions.DefaultCancelPrompt);
             return base.MakePrompt(context, prompt, options);
@@ -62,7 +63,7 @@
     [Serializable]
     public class CancelablePromptOptions<T> : PromptOptions<T>
     {
-        public CancelablePromptOptions(string prompt, string cancelPrompt = null, string retry = null, string tooManyAttempts = null, IList<T> options = null, int attempts = 3, PromptStyler promptStyler = null) 
+        public CancelablePromptOptions(string prompt, string cancelPrompt = null, string retry = null, string tooManyAttempts = null, IReadOnlyList<T> options = null, int attempts = 3, PromptStyler promptStyler = null) 
             : base(prompt, retry, tooManyAttempts, options, attempts, promptStyler)
         {
             this.DefaultCancelPrompt = Resources.CancelablePromptChoice_CancelText;
