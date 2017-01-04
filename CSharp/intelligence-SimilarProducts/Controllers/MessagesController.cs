@@ -181,10 +181,6 @@
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetTokenAsync(connector));
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/octet-stream"));
                 }
-                else
-                {
-                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(imageAttachment.ContentType));
-                }
 
                 return await httpClient.GetStreamAsync(uri);
             }
@@ -241,7 +237,7 @@
                         var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
 
                         var response = activity.CreateReply();
-                        response.Text = "Hi! I am SimilarProducts Bot. I can find you similar products" +
+                        response.Text = "Hi! I am SimilarProducts Bot. I can find you similar products." +
                                         " Try sending me an image or an image URL.";
 
                         await connector.Conversations.ReplyToActivityAsync(response);
