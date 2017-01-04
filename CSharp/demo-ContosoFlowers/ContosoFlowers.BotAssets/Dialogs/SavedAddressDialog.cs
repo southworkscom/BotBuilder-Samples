@@ -16,7 +16,6 @@
         private readonly string prompt;
         private readonly string useSavedAddressPrompt;
         private readonly string saveAddressPrompt;
-        private readonly ILocationService locationService;
         private readonly IDialogFactory dialogFactory;
 
         private string currentAddress;
@@ -27,7 +26,6 @@
             string saveAddressPrompt, 
             IDictionary<string, string> savedAddresses, 
             IEnumerable<string> saveOptionNames,
-            ILocationService locationService,
             IDialogFactory dialogFactory)
         {
             this.savedAddresses = savedAddresses ?? new Dictionary<string, string>();
@@ -35,7 +33,6 @@
             this.prompt = prompt;
             this.useSavedAddressPrompt = useSavedAddressPrompt;
             this.saveAddressPrompt = saveAddressPrompt;
-            this.locationService = locationService;
             this.dialogFactory = dialogFactory;
         }
 
