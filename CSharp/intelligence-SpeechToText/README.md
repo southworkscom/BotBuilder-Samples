@@ -14,13 +14,7 @@ The minimum prerequisites to run this sample are:
 
 ### Usage
 
-Attach an audio file (wav format) and send an optional command as text. 
-Supported Commands:
-* `WORD` - Counts the number of words.
-* `CHARACTER` - Counts the number of characters excluding spaces.
-* `SPACE` - Counts the number of spaces.
-* `VOWEL` - Counts the number of vowels.
-* Any other word will count the occurrences of that word in the transcribed text
+Attach an audio file (wav format).
 
 ### Code Highlights
 
@@ -62,8 +56,15 @@ public async Task<string> GetTextFromAudioAsync(Stream audiostream)
 
             var response = await client.PostAsync(requestUri, binaryContent);
             var responseString = await response.Content.ReadAsStringAsync();
-            dynamic data = JsonConvert.DeserializeObject(responseString);
-            return data.header.name;
+            try
+            {
+                dynamic data = JsonConvert.DeserializeObject(responseString);
+                return data.header.name;
+            }
+            catch (JsonReaderException ex)
+            {
+                throw new Exception(responseString, ex);
+            }
         }
     }
 }
