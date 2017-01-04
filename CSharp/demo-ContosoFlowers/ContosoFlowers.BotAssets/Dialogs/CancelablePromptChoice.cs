@@ -12,7 +12,7 @@
     {
         private static IEnumerable<string> cancelTerms = new[] { "Cancel", "Back", "B", "Abort" };
 
-        protected new readonly CancelablePromptOptions<T> promptOptions;
+        private new readonly CancelablePromptOptions<T> promptOptions;
 
         public CancelablePromptChoice(CancelablePromptOptions<T> promptOptions)
             : base(promptOptions)
@@ -52,10 +52,9 @@
             return base.TryParse(message, out result);
         }
 
-
         protected override IMessageActivity MakePrompt(IDialogContext context, string prompt, IReadOnlyList<T> options = null, IReadOnlyList<string> descriptions = null)
         {
-            prompt += Environment.NewLine + (promptOptions.CancelPrompt ?? promptOptions.DefaultCancelPrompt);
+            prompt += Environment.NewLine + (this.promptOptions.CancelPrompt ?? this.promptOptions.DefaultCancelPrompt);
             return base.MakePrompt(context, prompt, options);
         }
     }

@@ -337,7 +337,8 @@
             var receiptCard = new ReceiptCard
             {
                 Title = Resources.RootDialog_Receipt_Title,
-                Facts = new List<Fact> {
+                Facts = new List<Fact>
+                {
                     new Fact(Resources.RootDialog_Receipt_OrderID, order.OrderID),
                     new Fact(Resources.RootDialog_Receipt_PaymentMethod, creditCardOffuscated)
                 },
