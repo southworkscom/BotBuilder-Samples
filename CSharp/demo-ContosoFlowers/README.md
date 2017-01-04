@@ -13,7 +13,7 @@ You came across the Microsoft Bot Framework which support a great variety of cha
 
 The minimum prerequisites to run this sample are:
 * The latest update of Visual Studio 2015. You can download the community version [here](http://www.visualstudio.com) for free.
-* The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://aka.ms/bf-bc-emulator). Please refer to [this documentation article](https://docs.botframework.com/en-us/csharp/builder/sdkreference/gettingstarted.html#emulator) to know more about the Bot Framework Emulator.
+* The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://emulator.botframework.com/). Please refer to [this documentation article](https://github.com/microsoft/botframework-emulator/wiki/Getting-Started) to know more about the Bot Framework Emulator.
 
 #### Rich cards
 Many messaging channels provide the ability to attach richer objects. The Bot Framework has the ability to render rich cards as attachments.
@@ -126,13 +126,13 @@ In this sample, the main flow is implemented in the [`RootDialog` class](Contoso
 As seen in the two examples above, you can reuse your dialogs in different segments of the bot's flow, or even different bots, and extract them into a library. An example of this is the [ContosoFlowers.BotAssets project](ContosoFlowers.BotAssets) which includes several reusable dialogs and extension methods.
 
 - Dialogs
-    - [AddressDialog](https://github.com/fuselabs/BotBuilder-samples/blob/master/ContosoFlowers/CSharp/ContosoFlowers.BotAssets/Dialogs/AddressDialog.cs)
-    - [PagedCarouselDialog](https://github.com/fuselabs/BotBuilder-samples/blob/master/ContosoFlowers/CSharp/ContosoFlowers.BotAssets/Dialogs/PagedCarouselDialog.cs)
-    - [PromptStringRegex](https://github.com/fuselabs/BotBuilder-samples/blob/master/ContosoFlowers/CSharp/ContosoFlowers.BotAssets/Dialogs/PromptStringRegex.cs)
-    - [SavedAddressDialog](https://github.com/fuselabs/BotBuilder-samples/blob/master/ContosoFlowers/CSharp/ContosoFlowers.BotAssets/Dialogs/SavedAddressDialog.cs)
+    - [AddressDialog](ContosoFlowers.BotAssets/Dialogs/AddressDialog.cs)
+    - [PagedCarouselDialog](ContosoFlowers.BotAssets/Dialogs/PagedCarouselDialog.cs)
+    - [PromptStringRegex](ContosoFlowers.BotAssets/Dialogs/PromptStringRegex.cs)
+    - [SavedAddressDialog](ContosoFlowers.BotAssets/Dialogs/SavedAddressDialog.cs)
 - Extensions
-    - [HeroCardExtensions](https://github.com/fuselabs/BotBuilder-samples/blob/master/ContosoFlowers/CSharp/ContosoFlowers.BotAssets/Extensions/HeroCardExtensions.cs)
-    - [IBotDataBagExtensions](https://github.com/fuselabs/BotBuilder-samples/blob/master/ContosoFlowers/CSharp/ContosoFlowers.BotAssets/Extensions/IBotDataBagExtensions.cs)
+    - [HeroCardExtensions](ContosoFlowers.BotAssets/Extensions/HeroCardExtensions.cs)
+    - [IBotDataBagExtensions](ContosoFlowers.BotAssets/Extensions/IBotDataBagExtensions.cs)
 
 #### Complex Forms
 Handling a guided conversation like ordering a bouquet of flowers for your loved one can require a lot of effort. In order to simplify building guided conversations the Bot Framework provides a powerful dialog building block known as [FormFlow](https://docs.botframework.com/en-us/csharp/builder/sdkreference/forms.html). A FormFlow dialog guides the user through filling in the form; a collection of fields that you want to fill in through a conversation with the user.
