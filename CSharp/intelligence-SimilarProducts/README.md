@@ -33,15 +33,13 @@ public async Task<IList<ImageResult>> GetSimilarProductImagesAsync(string url)
         var text = await httpClient.GetStringAsync(apiUrl);
         var response = JsonConvert.DeserializeObject<BingImageResponse>(text);
 
-        return response
-            ?.visuallySimilarProducts
-            ?.Select(i => new ImageResult
+        return response?.VisuallySimilarProducts?.Select(i => new ImageResult
             {
-                HostPageDisplayUrl = i.hostPageDisplayUrl,
-                HostPageUrl = i.hostPageUrl,
-                Name = i.name,
-                ThumbnailUrl = i.thumbnailUrl,
-                WebSearchUrl = i.webSearchUrl
+                HostPageDisplayUrl = i.HostPageDisplayUrl,
+                HostPageUrl = i.HostPageUrl,
+                Name = i.Name,
+                ThumbnailUrl = i.ThumbnailUrl,
+                WebSearchUrl = i.WebSearchUrl
             })
             .ToList();
     }
@@ -72,15 +70,13 @@ public async Task<IList<ImageResult>> GetSimilarProductImagesAsync(Stream stream
         var text = await postResponse.Content.ReadAsStringAsync();
         var response = JsonConvert.DeserializeObject<BingImageResponse>(text);
 
-        return response
-            ?.visuallySimilarProducts
-            ?.Select(i => new ImageResult
+        return response?.VisuallySimilarProducts?.Select(i => new ImageResult
             {
-                HostPageDisplayUrl = i.hostPageDisplayUrl,
-                HostPageUrl = i.hostPageUrl,
-                Name = i.name,
-                ThumbnailUrl = i.thumbnailUrl,
-                WebSearchUrl = i.webSearchUrl
+                HostPageDisplayUrl = i.HostPageDisplayUrl,
+                HostPageUrl = i.HostPageUrl,
+                Name = i.Name,
+                ThumbnailUrl = i.ThumbnailUrl,
+                WebSearchUrl = i.WebSearchUrl
             })
             .ToList();
     }

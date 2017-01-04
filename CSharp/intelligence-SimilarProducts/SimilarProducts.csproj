@@ -125,7 +125,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BingImageAggregateOffer.cs" />
+    <Compile Include="Services\BingImageAggregateRating.cs" />
+    <Compile Include="Services\BingImageInstrumentation.cs" />
     <Compile Include="Services\BingImageResponse.cs" />
+    <Compile Include="Services\BingImageThumbnail.cs" />
+    <Compile Include="Services\BingImageVisuallySimilarProduct.cs" />
     <Compile Include="Services\IImageSearchService.cs" />
     <Compile Include="Services\BingImageSearchService.cs" />
     <Compile Include="Services\ImageResult.cs" />
