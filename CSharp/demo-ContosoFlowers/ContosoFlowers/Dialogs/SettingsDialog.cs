@@ -146,7 +146,8 @@
                         userPreferences.BillingAddresses[this.selectedAddressToUpdate.ToLower()] = address;
                     });
 
-            await context.PostAsync(Resources.SettingsDialog_Address_Entered);
+            var reply = string.Format(CultureInfo.CurrentCulture, Resources.SettingsDialog_Address_Entered, this.selectedAddressToUpdate, address);
+            await context.PostAsync(reply);
 
             await this.StartAsync(context);
         }
