@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Bot.Connector.DirectLine;
-    using Microsoft.Bot.Connector.DirectLine.Models;
     using Models;
     using Newtonsoft.Json;
 
@@ -25,7 +24,7 @@
         {
             DirectLineClient client = new DirectLineClient(directLineSecret);
             
-            var conversation = await client.Conversations.NewConversationAsync();
+            var conversation = await client.Conversations.StartConversationAsync();
 
             new System.Threading.Thread(async () => await ReadBotMessagesAsync(client, conversation.ConversationId)).Start();
 
@@ -43,13 +42,14 @@
                 {
                     if (input.Length > 0)
                     {
-                        Message userMessage = new Message
+                        Activity userMessage = new Activity
                         {
-                            FromProperty = fromUser,
-                            Text = input
+                            From = new ChannelAccount(fromUser),
+                            Text = input,
+                            Type = ActivityTypes.Message
                         };
 
-                        await client.Conversations.PostMessageAsync(conversation.ConversationId, userMessage);
+                        await client.Conversations.PostActivityAsync(conversation.ConversationId, userMessage);
                     }
                 }
             }
@@ -61,20 +61,20 @@
             
             while (true)
             {
-                var messages = await client.Conversations.GetMessagesAsync(conversationId, watermark);
-                watermark = messages?.Watermark;
+                var activitySet = await client.Conversations.GetActivitiesAsync(conversationId, watermark);
+                watermark = activitySet?.Watermark;
 
-                var messagesFromBotText = from x in messages.Messages
-                                   where x.FromProperty == botId
+                var activities = from x in activitySet.Activities
+                                   where x.From.Id == botId
                                    select x;
 
-                foreach (Message message in messagesFromBotText)
+                foreach (Activity activity in activities)
                 {
-                    Console.WriteLine(message.Text);
+                    Console.WriteLine(activity.Text);
 
-                    if (message.ChannelData != null)
+                    if (activity.ChannelData != null)
                     {
-                        var channelData = JsonConvert.DeserializeObject<DirectLineChannelData>(message.ChannelData.ToString());
+                        var channelData = JsonConvert.DeserializeObject<DirectLineChannelData>(activity.ChannelData.ToString());
 
                         switch (channelData.ContentType)
                         {
