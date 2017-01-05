@@ -18,10 +18,7 @@ var connector = new builder.ChatConnector({
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
-// Create Bot with `persistConversationData` flag 
-var bot = new builder.UniversalBot(connector, {
-    persistConversationData: true
-});
+// Listen for messages
 server.post('/api/messages', connector.listen());
 
 var HelpMessage = '\n * If you want to know which city I\'m using for my searches type \'current city\'. \n * Want to change the current city? Type \'change city to cityName\'. \n * Want to change it just for your searches? Type \'change my city to cityName\'';
@@ -29,12 +26,12 @@ var UserNameKey = 'UserName';
 var UserWelcomedKey = 'UserWelcomed';
 var CityKey = 'City';
 
-// Bot dialogs
-bot.dialog('/', function (session) {
+// Setup bot with default dialog
+var bot = new builder.UniversalBot(connector, function (session) {
 
     var telemetry = telemetryModule.createTelemetry(session, { setDefault: false });
 
-    // initialize default city
+    // initialize with default city
     if (!session.conversationData[CityKey]) {
         session.conversationData[CityKey] = 'Seattle';
 
@@ -46,15 +43,19 @@ bot.dialog('/', function (session) {
 
     appInsightsClient.trackTrace('start', telemetry);
 
-    session.beginDialog('/search');
+    session.beginDialog('search');
 });
 
-bot.dialog('/search', new builder.IntentDialog()
+// Enable Conversation Data persistence
+bot.set('persistConversationData', true);
+
+// Main dialog
+bot.dialog('search', new builder.IntentDialog()
     .onBegin(function (session, args, next) {
         // is user's name set? 
         var userName = session.userData[UserNameKey];
         if (!userName) {
-            session.beginDialog('/askUserName');
+            session.beginDialog('greet');
             return;
         }
 
@@ -80,8 +81,8 @@ bot.dialog('/search', new builder.IntentDialog()
         // print city settings
         var userName = session.userData[UserNameKey];
         var defaultCity = session.conversationData[CityKey];
-        var userCity = session.privateConversationData[CityKey]
-        if (!!userCity) {
+        var userCity = session.privateConversationData[CityKey];
+        if (userCity) {
             session.send(
                 '%s, you have overridden the city. Your searches are for things in %s. The default conversation city is %s.',
                 userName, userCity, defaultCity);
@@ -130,11 +131,11 @@ bot.dialog('/search', new builder.IntentDialog()
             var userName = session.userData[UserNameKey];
             var messageText = session.message.text.trim();
             session.send('%s, wait a few seconds. Searching for \'%s\' in \'%s\'...', userName, messageText, city);
-            session.send('https://www.bing.com/search?q=%s', encodeURIComponent(messageText + ' in ' + city));
+            session.send('https://www.bing.comsearch?q=%s', encodeURIComponent(messageText + ' in ' + city));
 
         } catch (error) {
             measuredEventTelemetry.exception = error.toString();
-            appInsightsClient.trackException('search', t)
+            appInsightsClient.trackException('search', t);
 
         } finally {
             var timerEnd = process.hrtime(timerStart);
@@ -144,18 +145,19 @@ bot.dialog('/search', new builder.IntentDialog()
         }
     }));
 
-bot.dialog('/askUserName', new builder.SimpleDialog(function (session, results) {
+// Greet dialog
+bot.dialog('greet', new builder.SimpleDialog(function (session, results) {
     if (results && results.response) {
         session.userData[UserNameKey] = results.response;
         session.privateConversationData[UserWelcomedKey] = true;
-        session.send('Welcome %s! %s', results.response, HelpMessage)
+        session.send('Welcome %s! %s', results.response, HelpMessage);
 
         var telemetry = telemetryModule.createTelemetry(session);
         telemetry.userName = results.response; // You can add properties after-the-fact as well
         appInsightsClient.trackEvent('new user', telemetry);
 
-        //  end the current dialog and replace it with  '/search' dialog
-        session.replaceDialog('/search');
+        //  end the current dialog and replace it with  'search' dialog
+        session.replaceDialog('search');
         return;
     }
 
