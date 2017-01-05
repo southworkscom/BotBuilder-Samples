@@ -56,11 +56,13 @@ module.exports = {
             session.send('Looking for hotels in %s', results.response); 
             next();
         },
-    ... };
+        ...
+    ]
+};
 
 // app.js
 var Hotels = require('./hotels');
-bot.dialog('/hotels', Hotels.Dialog);
+bot.dialog('hotels', Hotels.Dialog);
 
 // Root dialog
 bot.dialog('/', ...);
@@ -121,14 +123,14 @@ Control is returned from the child dialog back to the caller (popping of the sta
 
 #### IntentDialog for listening to specific keywords
 
-Our root dialog handler is created using an [IntentDialog](https://docs.botframework.com/en-us/node/builder/chat/IntentDialog/) to handle any message including specific keywords. When a match is found the Support dialog is initiated using `session.beginDialog('/support')`. Check out [app.js root dialog handler](app.js#L30-L33) to see its usage.
+Our root dialog handler is created using an [IntentDialog](https://docs.botframework.com/en-us/node/builder/chat/IntentDialog/) to handle any message including specific keywords. When a match is found the Support dialog is initiated using `session.beginDialog('support')`. Check out [app.js root dialog handler](app.js#L30-L33) to see its usage.
 The IntentDialog also has an [onDefault](https://docs.botframework.com/en-us/node/builder/chat/IntentDialog/#onbegin--ondefault-handlers) handler that will be notified if it fails to match one of the registered keywords. [In our sample](app.js#L40-L51) we are using it to request a `Prompts.choice` so the user can decide how to continue.
 
 ````JavaScript
 bot.dialog('/', new builder.IntentDialog()
     .matchesAny([/help/i, /support/i, /problem/i], [
         function (session) {
-            session.beginDialog('/support');
+            session.beginDialog('support');
         },
         function (session, result) { ... }
     ])
