@@ -23,32 +23,30 @@ Both properties contains a list of [`IIdentity`](https://docs.botframework.com/e
 
 ````JavaScript
 bot.on('conversationUpdate', function (message) {
-    if (message.membersAdded) {
+    if (message.membersAdded && message.membersAdded.length > 0) {
         var membersAdded = message.membersAdded
             .map((m) => {
                 var isSelf = m.id === message.address.bot.id;
-                return (isSelf ? message.address.bot.name : m.name) + ' (Id: ' + m.id + ')';
+                return (isSelf ? message.address.bot.name : m.name) || '' + ' (Id: ' + m.id + ')';
             })
             .join(', ');
 
-        var reply = new builder.Message()
+        bot.send(new builder.Message()
             .address(message.address)
-            .text('Welcome ' + membersAdded);
-        bot.send(reply);
+            .text('Welcome ' + membersAdded));
     }
 
-    if (message.membersRemoved) {
+    if (message.membersRemoved && message.membersRemoved.length > 0) {
         var membersRemoved = message.membersRemoved
             .map((m) => {
                 var isSelf = m.id === message.address.bot.id;
-                return (isSelf ? message.address.bot.name : m.name) + ' (Id: ' + m.id + ')';
+                return (isSelf ? message.address.bot.name : m.name) || '' + ' (Id: ' + m.id + ')';
             })
             .join(', ');
 
-        var reply = new builder.Message()
+        bot.send(new builder.Message()
             .address(message.address)
-            .text('The following members ' + membersRemoved + ' were removed or left the conversation :(');
-        bot.send(reply);
+            .text('The following members ' + membersRemoved + ' were removed or left the conversation :('));
     }
 });
 ````
@@ -66,11 +64,11 @@ var connectorApiClient = new Swagger(
     });
 ````
 
-Once a message is received in a group conversation, we'll ask the API for its members. In order to call the REST API, we need to be authenticated using the bot's JWT token (see [app.js - addTokenToClient function](app.js#L80-L90)) and then override the API's hostname using the channel's serviceUrl (see [app.js - client.setHost](app.js#L68-L70)).
-Then we call Swagger generated client (`client.Conversations.Conversations_GetConversationMembers`) and pass the response to a helper function that will print the members list to the conversation ([app.js - printMembersInChannel function](app.js#L92-L103)).
+Once a message is received in a group conversation, we'll ask the API for its members. In order to call the REST API, we need to be authenticated using the bot's JWT token (see [app.js - addTokenToClient function](app.js#L79-89)) and then override the API's hostname using the channel's serviceUrl (see [app.js - client.setHost](app.js#L39-L41)).
+Then we call Swagger generated client (`client.Conversations.Conversations_GetConversationMembers`) and pass the response to a helper function that will print the members list to the conversation ([app.js - printMembersInChannel function](app.js#L91-L102)).
 
 ````JavaScript
-bot.dialog('/', function (session) {
+var bot = new builder.UniversalBot(connector, function (session) {
     var message = session.message;
     var conversationId = message.address.conversation.id;
 
