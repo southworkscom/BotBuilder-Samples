@@ -88,6 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContosoLocationResourceManager.cs" />
     <Compile Include="Dialogs\CancelablePromptChoice.cs" />
     <Compile Include="Dialogs\DialogFactory.cs" />
     <Compile Include="Dialogs\IDialogFactory.cs" />

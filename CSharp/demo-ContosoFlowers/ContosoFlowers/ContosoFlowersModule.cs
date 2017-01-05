@@ -2,6 +2,7 @@
 {
     using System.Configuration;
     using Autofac;
+    using BotAssets;
     using BotAssets.Dialogs;
     using Dialogs;
     using Microsoft.Bot.Builder.Dialogs;
@@ -48,6 +49,7 @@
                 .WithParameter("apiKey", ConfigurationManager.AppSettings["MicrosoftBingMapsKey"])
                 .WithParameter("options", LocationOptions.UseNativeControl | LocationOptions.ReverseGeocode)
                 .WithParameter("requiredFields", LocationRequiredFields.StreetAddress | LocationRequiredFields.Locality | LocationRequiredFields.Country)
+                .WithParameter("resourceManager", new ContosoLocationResourceManager())
                 .InstancePerDependency();
 
             // Service dependencies
