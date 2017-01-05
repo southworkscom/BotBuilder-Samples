@@ -43,3 +43,10 @@ Clicking on any item in the table will open up another pane allowing you to view
 For more information logged directly from the Bot Connector, be sure to put your instrumentation key in to your bot's listing in the Bot Directory.
 
 ![Bot Directory Instrumentation Key field](images/botdirfield.png)
+
+### More Information
+
+To get more information about how to get started in Bot Builder for Node and Attachments please review the following resources:
+* [Bot Builder for Node.js Reference](https://docs.botframework.com/en-us/node/builder/overview/#navtitle)
+* [AppInsights Overview](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-overview)
+* [AppInsights for Custom Events and Metrics](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-api-custom-events-metrics)
