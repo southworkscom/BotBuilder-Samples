@@ -184,20 +184,20 @@ private static Attachment GetVideoCard()
 The Audio card is a card that’s capable of playing an audio file. Check out the `GetAudioCard` method in the [CardsDialog](CardsDialog.cs#L193-L221) class for an Audio Card sample.
 
 ````C#
-private static Attachment GetVideoCard()
+private static Attachment GetAudioCard()
 {
     var currentUrl = HttpContext.Current.Request.Url;
 
-    var videoCard = new VideoCard
+    var audioCard = new AudioCard
     {
-        Title = "Microsoft Bot Framework and how we created the Azure Bot",
+        Title = "Introduction to the Microsoft Bot Framework",
         Subtitle = "by Thiago Almeida",
-        Text = "At Microsoft, we have first-hand experience writing bots and building artificial intelligence systems, so we’ve shared our services and tools so you can use them to add conversations to your own products. In this session we will cover the Microsoft Bot Framework and it's three components: the Microsoft Cognitive Services, the Bot Builder SDK, and the Bot Connector. We will also show the code and details about the Azure Bot and how it was built.",
+        Text = "Bots are increasingly popular and useful in many scenarios. In this session you will learn what options you have and how to get started building Bots using the Microsoft Bot Framework and other technologies such as LUIS.",
         Media = new List<MediaUrl>()
         {
             new MediaUrl()
             {
-                Url = "http://video.ch9.ms/ch9/15ec/8933d06d-a6cd-460b-8a52-245ab52515ec/BotFramework_mid.mp4"
+                Url = "http://video.ch9.ms/ch9/abcc/d1e3ab3f-2d06-4c62-92d1-56c36a9cabcc/IntroBot.mp3"
             }
         },
         Buttons = new List<CardAction>()
@@ -206,12 +206,12 @@ private static Attachment GetVideoCard()
             {
                 Title = "See more in Channel9",
                 Type = ActionTypes.OpenUrl,
-                Value = "https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Microsoft-Bot-Framework-and-how-we-created-the-Azure-Bot"
+                Value = "https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Introduction-to-the-Microsoft-Bot-Framework"
             }
         }
     };
 
-    return videoCard.ToAttachment();
+    return audioCard.ToAttachment();
 }
 ````
 
