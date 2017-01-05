@@ -74,7 +74,6 @@
                 message += "\n\nCharacter Count: " + characterCount;
 
                 var spaceCount = text.Count(c => c == ' ');
-
                 message += "\n\nSpace Count: " + spaceCount;
 
                 var vowelCount = text.ToUpper().Count("AEIOU".Contains);
