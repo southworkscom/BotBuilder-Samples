@@ -14,7 +14,7 @@ The minimum prerequisites to run this sample are:
 
 ### Code Highlights
 
-Many messaging channels provide the ability to attach richer objects. The Bot Framework has the ability to render rich cards as attachments. There are several types of cards supported: Hero Card, Thumbnail Card, Receipt Card and Sign-In Card. Once the desired Card type is selected, it is mapped into an `Attachment` data structure. Check out the key code located in the [CardsDialog](CardsDialog.cs#L42-L47) class where the `message.Attachments` property of the message activity is populated with a card attachment.
+Many messaging channels provide the ability to attach richer objects. The Bot Framework has the ability to render rich cards as attachments. There are several types of cards supported: Hero Card, Thumbnail Card, Receipt Card, Sign-In Card, Animation Card, Video Card and Audio Card. Once the desired Card type is selected, it is mapped into an `Attachment` data structure. Check out the key code located in the [CardsDialog](CardsDialog.cs#L46-L51) class where the `message.Attachments` property of the message activity is populated with a card attachment.
 
 ````C#
 public async Task DisplaySelectedCard(IDialogContext context, IAwaitable<string> result)
@@ -34,7 +34,7 @@ public async Task DisplaySelectedCard(IDialogContext context, IAwaitable<string>
 
 #### Hero Card
 
-The Hero card is a multipurpose card; it primarily hosts a single large image, a button, and a "tap action", along with text content to display on the card. Check out the `GetHeroCard` method in the [CardsDialog](CardsDialog.cs#L70-L82) class for a Hero Card sample.
+The Hero card is a multipurpose card; it primarily hosts a single large image, a button, and a "tap action", along with text content to display on the card. Check out the `GetHeroCard` method in the [CardsDialog](CardsDialog.cs#L78-L90) class for a Hero Card sample.
 
 ````C#
 private static Attachment GetHeroCard()
@@ -53,7 +53,7 @@ private static Attachment GetHeroCard()
 ````
 
 #### Thumbnail Card
-The Thumbnail card is a multipurpose card; it primarily hosts a single small image, a button, and a "tap action", along with text content to display on the card. Check out the `GetThumbnailCard` method in the [CardsDialog](CardsDialog.cs#L84-L96) class for a Thumbnail Card sample.
+The Thumbnail card is a multipurpose card; it primarily hosts a single small image, a button, and a "tap action", along with text content to display on the card. Check out the `GetThumbnailCard` method in the [CardsDialog](CardsDialog.cs#L92-L104) class for a Thumbnail Card sample.
 
 ````C#
 private static Attachment GetThumbnailCard()
@@ -72,7 +72,7 @@ private static Attachment GetThumbnailCard()
 ````
 
 #### Receipt Card
-The receipt card allows the Bot to present a receipt to the user. Check out the `GetReceiptCard` method in the [CardsDialog](CardsDialog.cs#L98-L122) class for a Receipt Card sample.
+The receipt card allows the Bot to present a receipt to the user. Check out the `GetReceiptCard` method in the [CardsDialog](CardsDialog.cs#L106-L130) class for a Receipt Card sample.
 
 ````C#
 private static Attachment GetReceiptCard()
@@ -103,7 +103,7 @@ private static Attachment GetReceiptCard()
 ````
 
 #### Sign-In Card
-The Sign-In card is a card representing a request to sign in the user. Check out the `GetSigninCard` method in the [CardsDialog](CardsDialog.cs#L124-L133) class for a Sign-In Card sample.
+The Sign-In card is a card representing a request to sign in the user. Check out the `GetSigninCard` method in the [CardsDialog](CardsDialog.cs#L132-L141) class for a Sign-In Card sample.
 
 > Note: The sign in card can be used to initiate an authentication flow which is beyond this sample. For a complete authentication flow sample take a look at [AuthBot](https://github.com/MicrosoftDX/AuthBot).
 
@@ -117,6 +117,101 @@ private static Attachment GetSigninCard()
     };
 
     return signinCard.ToAttachment();
+}
+````
+
+#### Animation Card
+The Animation card is a card that’s capable of playing animated GIFs or short videos. Check out the `GetAnimationCard` method in the [CardsDialog](CardsDialog.cs#L143-L161) class for an Animation Card sample.
+
+````C#
+private static Attachment GetAnimationCard()
+{
+    var currentUrl = HttpContext.Current.Request.Url;
+
+    var animationCard = new AnimationCard
+    {
+        Title = "Microsoft Bot Framework",
+        Subtitle = "Animation Card",
+        Media = new List<MediaUrl>()
+        {
+            new MediaUrl()
+            {
+                Url = new UriBuilder(currentUrl.Scheme, currentUrl.Host, currentUrl.Port, "/images/botframework.gif").ToString()
+            }
+        }
+    };
+
+    return animationCard.ToAttachment();
+}
+````
+
+#### Video Card
+The Video card is a card that’s capable of playing videos. Check out the `GetVideoCard` method in the [CardsDialog](CardsDialog.cs#L163-L191) class for a Video Card sample.
+
+````C#
+private static Attachment GetVideoCard()
+{
+    var currentUrl = HttpContext.Current.Request.Url;
+
+    var videoCard = new VideoCard
+    {
+        Title = "Microsoft Bot Framework and how we created the Azure Bot",
+        Subtitle = "by Thiago Almeida",
+        Text = "At Microsoft, we have first-hand experience writing bots and building artificial intelligence systems, so we’ve shared our services and tools so you can use them to add conversations to your own products. In this session we will cover the Microsoft Bot Framework and it's three components: the Microsoft Cognitive Services, the Bot Builder SDK, and the Bot Connector. We will also show the code and details about the Azure Bot and how it was built.",
+        Media = new List<MediaUrl>()
+        {
+            new MediaUrl()
+            {
+                Url = "http://video.ch9.ms/ch9/15ec/8933d06d-a6cd-460b-8a52-245ab52515ec/BotFramework_mid.mp4"
+            }
+        },
+        Buttons = new List<CardAction>()
+        {
+            new CardAction()
+            {
+                Title = "See more in Channel9",
+                Type = ActionTypes.OpenUrl,
+                Value = "https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Microsoft-Bot-Framework-and-how-we-created-the-Azure-Bot"
+            }
+        }
+    };
+
+    return videoCard.ToAttachment();
+}
+````
+
+#### Audio Card
+The Audio card is a card that’s capable of playing an audio file. Check out the `GetAudioCard` method in the [CardsDialog](CardsDialog.cs#L193-L221) class for an Audio Card sample.
+
+````C#
+private static Attachment GetVideoCard()
+{
+    var currentUrl = HttpContext.Current.Request.Url;
+
+    var videoCard = new VideoCard
+    {
+        Title = "Microsoft Bot Framework and how we created the Azure Bot",
+        Subtitle = "by Thiago Almeida",
+        Text = "At Microsoft, we have first-hand experience writing bots and building artificial intelligence systems, so we’ve shared our services and tools so you can use them to add conversations to your own products. In this session we will cover the Microsoft Bot Framework and it's three components: the Microsoft Cognitive Services, the Bot Builder SDK, and the Bot Connector. We will also show the code and details about the Azure Bot and how it was built.",
+        Media = new List<MediaUrl>()
+        {
+            new MediaUrl()
+            {
+                Url = "http://video.ch9.ms/ch9/15ec/8933d06d-a6cd-460b-8a52-245ab52515ec/BotFramework_mid.mp4"
+            }
+        },
+        Buttons = new List<CardAction>()
+        {
+            new CardAction()
+            {
+                Title = "See more in Channel9",
+                Type = ActionTypes.OpenUrl,
+                Value = "https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Microsoft-Bot-Framework-and-how-we-created-the-Azure-Bot"
+            }
+        }
+    };
+
+    return videoCard.ToAttachment();
 }
 ````
 
