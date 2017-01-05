@@ -2,6 +2,7 @@
 {
     using System.Configuration;
     using Autofac;
+    using BotAssets;
     using BotAssets.Dialogs;
     using Dialogs;
     using Microsoft.Bot.Builder.Dialogs;
@@ -43,11 +44,12 @@
              .InstancePerDependency();
 
             // Location Dialog
-            // cstr signature: LocationDialog(string apiKey, string channelId, string prompt, LocationOptions options = LocationOptions.None, LocationRequiredFields requiredFields = LocationRequiredFields.None, LocationResourceManager resourceManager = null);
+            // ctor signature: LocationDialog(string apiKey, string channelId, string prompt, LocationOptions options = LocationOptions.None, LocationRequiredFields requiredFields = LocationRequiredFields.None, LocationResourceManager resourceManager = null);
             builder.RegisterType<LocationDialog>()
                 .WithParameter("apiKey", ConfigurationManager.AppSettings["MicrosoftBingMapsKey"])
                 .WithParameter("options", LocationOptions.UseNativeControl | LocationOptions.ReverseGeocode)
                 .WithParameter("requiredFields", LocationRequiredFields.StreetAddress | LocationRequiredFields.Locality | LocationRequiredFields.Country)
+                .WithParameter("resourceManager", new ContosoLocationResourceManager())
                 .InstancePerDependency();
 
             // Service dependencies
