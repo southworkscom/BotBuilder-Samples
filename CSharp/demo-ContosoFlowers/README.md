@@ -125,8 +125,6 @@ In this sample, the main flow is implemented in the [`RootDialog` class](Contoso
 #### Creating Reusable Components
 As seen in the two examples above, you can reuse your dialogs in different segments of the bot's flow, or even different bots, and extract them into a library. An example of this is the [ContosoFlowers.BotAssets project](ContosoFlowers.BotAssets) which includes several reusable dialogs and extension methods.
 
-Additionally, the [Bing Location Control](https://github.com/Microsoft/BotBuilder-Location) is being used to resolve and validate the shipping and billing addresses, backed by Bing Maps REST services.
-
 - Contoso Flowers' Dialogs
     - [PagedCarouselDialog](ContosoFlowers.BotAssets/Dialogs/PagedCarouselDialog.cs)
     - [PromptStringRegex](ContosoFlowers.BotAssets/Dialogs/PromptStringRegex.cs)
@@ -134,6 +132,10 @@ Additionally, the [Bing Location Control](https://github.com/Microsoft/BotBuilde
 - Extensions
     - [HeroCardExtensions](ContosoFlowers.BotAssets/Extensions/HeroCardExtensions.cs)
     - [IBotDataBagExtensions](ContosoFlowers.BotAssets/Extensions/IBotDataBagExtensions.cs)
+
+Additionally, the [Bing Location Control](https://github.com/Microsoft/BotBuilder-Location) is being used to resolve and validate the shipping and billing addresses, backed by Bing Maps REST services.
+Take a look [here](ContosoFlowers/ContosoFlowersModule.cs#L46-L53) to see how to leverage DI to configure the control, and [here](ContosoFlowers/Dialogs/RootDialog.cs#L82-L91) to see how to use the DialogFactory to create an instance of the Control's Location Dialog.
+
 
 #### Complex Forms
 Handling a guided conversation like ordering a bouquet of flowers for your loved one can require a lot of effort. In order to simplify building guided conversations the Bot Framework provides a powerful dialog building block known as [FormFlow](https://docs.botframework.com/en-us/csharp/builder/sdkreference/forms.html). A FormFlow dialog guides the user through filling in the form; a collection of fields that you want to fill in through a conversation with the user.
