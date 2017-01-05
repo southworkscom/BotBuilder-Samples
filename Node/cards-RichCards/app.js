@@ -7,16 +7,14 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 
-// Create chat bot
+// Create chat bot and listen to messages
 var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
-var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
-// Bot dialog
-bot.dialog('/', [
+var bot = new builder.UniversalBot(connector, [
     function (session) {
         builder.Prompts.choice(session, 'What card would like to test?', CardNames, {
             maxRetries: 3,
@@ -80,7 +78,7 @@ function createReceiptCard(session) {
         .title('John Doe')
         .facts([
             builder.Fact.create(session, order++, 'Order Number'),
-            builder.Fact.create(session, 'VISA 5555-****', 'Payment Method'),
+            builder.Fact.create(session, 'VISA 5555-****', 'Payment Method')
         ])
         .items([
             builder.ReceiptItem.create(session, '$ 38.45', 'Data Transfer')
@@ -101,7 +99,7 @@ function createReceiptCard(session) {
 function createSigninCard(session) {
     return new builder.SigninCard(session)
         .text('BotFramework Sign-in Card')
-        .button('Sign-in', 'https://login.microsoftonline.com')
+        .button('Sign-in', 'https://login.microsoftonline.com');
 }
 
 function getSampleCardImages(session) {
