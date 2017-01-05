@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Web;
     using Microsoft.Bot.Builder.Dialogs;
     using Microsoft.Bot.Connector;
 
@@ -13,8 +14,11 @@
         private const string ThumbnailCard = "Thumbnail card";
         private const string ReceiptCard = "Receipt card";
         private const string SigninCard = "Sign-in card";
+        private const string AnimationCard = "Animation card";
+        private const string VideoCard = "Video card";
+        private const string AudioCard = "Audio card";
 
-        private IEnumerable<string> options = new List<string> { HeroCard, ThumbnailCard, ReceiptCard, SigninCard };
+        private IEnumerable<string> options = new List<string> { HeroCard, ThumbnailCard, ReceiptCard, SigninCard, AnimationCard, VideoCard, AudioCard };
 
         public async Task StartAsync(IDialogContext context)
         {
@@ -59,8 +63,12 @@
                     return GetThumbnailCard();
                 case ReceiptCard:
                     return GetReceiptCard();
-                case SigninCard:
-                    return GetSigninCard();
+                case AnimationCard:
+                    return GetAnimationCard();
+                case VideoCard:
+                    return GetVideoCard();
+                case AudioCard:
+                    return GetAudioCard();
 
                 default:
                     return GetHeroCard();
@@ -130,6 +138,86 @@
             };
 
             return signinCard.ToAttachment();
+        }
+
+        private static Attachment GetAnimationCard()
+        {
+            var currentUrl = HttpContext.Current.Request.Url;
+
+            var animationCard = new AnimationCard
+            {
+                Title = "Microsoft Bot Framework",
+                Subtitle = "Animation Card",
+                Media = new List<MediaUrl>()
+                {
+                    new MediaUrl()
+                    {
+                        Url = new UriBuilder(currentUrl.Scheme, currentUrl.Host, currentUrl.Port, "/images/botframework.gif").ToString()
+                    }
+                }
+            };
+
+            return animationCard.ToAttachment();
+        }
+
+        private static Attachment GetVideoCard()
+        {
+            var currentUrl = HttpContext.Current.Request.Url;
+
+            var videoCard = new VideoCard
+            {
+                Title = "Microsoft Bot Framework and how we created the Azure Bot",
+                Subtitle = "by Thiago Almeida",
+                Text = "At Microsoft, we have first-hand experience writing bots and building artificial intelligence systems, so we’ve shared our services and tools so you can use them to add conversations to your own products. In this session we will cover the Microsoft Bot Framework and it's three components: the Microsoft Cognitive Services, the Bot Builder SDK, and the Bot Connector. We will also show the code and details about the Azure Bot and how it was built.",
+                Media = new List<MediaUrl>()
+                {
+                    new MediaUrl()
+                    {
+                        Url = "http://video.ch9.ms/ch9/15ec/8933d06d-a6cd-460b-8a52-245ab52515ec/BotFramework_mid.mp4"
+                    }
+                },
+                Buttons = new List<CardAction>()
+                {
+                    new CardAction()
+                    {
+                        Title = "See more in Channel9",
+                        Type = ActionTypes.OpenUrl,
+                        Value = "https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Microsoft-Bot-Framework-and-how-we-created-the-Azure-Bot"
+                    }
+                }
+            };
+
+            return videoCard.ToAttachment();
+        }
+
+        private static Attachment GetAudioCard()
+        {
+            var currentUrl = HttpContext.Current.Request.Url;
+
+            var audioCard = new AudioCard
+            {
+                Title = "Introduction to the Microsoft Bot Framework",
+                Subtitle = "by Thiago Almeida",
+                Text = "Bots are increasingly popular and useful in many scenarios. In this session you will learn what options you have and how to get started building Bots using the Microsoft Bot Framework and other technologies such as LUIS.",
+                Media = new List<MediaUrl>()
+                {
+                    new MediaUrl()
+                    {
+                        Url = "http://video.ch9.ms/ch9/abcc/d1e3ab3f-2d06-4c62-92d1-56c36a9cabcc/IntroBot.mp3"
+                    }
+                },
+                Buttons = new List<CardAction>()
+                {
+                    new CardAction()
+                    {
+                        Title = "See more in Channel9",
+                        Type = ActionTypes.OpenUrl,
+                        Value = "https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Introduction-to-the-Microsoft-Bot-Framework"
+                    }
+                }
+            };
+
+            return audioCard.ToAttachment();
         }
     }
 }
