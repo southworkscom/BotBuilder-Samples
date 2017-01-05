@@ -14,4 +14,4 @@ exports.createTelemetry = (session, properties) => {
     }
 
     return data;
-}
+};
