@@ -19,7 +19,7 @@ const builder = require('botbuilder'),
 
 // Setup Restify Server
 const server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3979, () => {
+server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log('%s listening to %s', server.name, server.url);
 });
 
@@ -41,7 +41,7 @@ bot.dialog('/', session => {
         var stream = getAudioStreamFromAttachment(session.message.attachments[0]);
         speechService.getTextFromAudioStream(stream)
             .then(text => {
-                session.send(processText(session.message.text, text));
+                session.send(processText(text));
             })
             .catch(error => {
                 session.send('Oops! Something went wrong. Try again later.');
@@ -57,8 +57,9 @@ bot.dialog('/', session => {
 //=========================================================
 const hasAudioAttachment = session => {
     return session.message.attachments.length > 0 &&
-        (session.message.attachments[0].contentType === 'audio/wav' ||
-            session.message.attachments[0].contentType === 'application/octet-stream');
+        (session.message.attachments[0].contentType.indexOf('audio') === 0 ||
+         session.message.attachments[0].contentType === 'video/mp4' || // FB sends audio streams as MP4
+         session.message.attachments[0].contentType === 'application/octet-stream');
 };
 
 const getAudioStreamFromAttachment = attachment => {
@@ -93,20 +94,17 @@ const processText = (text) => {
 
     if (text && text.length > 0) {
         const wordCount = text.split(' ').filter(x => x).length;
-        result += ' Word Count: ' + wordCount;
+        result += '\r\n Word Count: ' + wordCount;
 
         const characterCount = text.replace(/ /g, '').length;
-        result += ' Character Count: ' + characterCount;
+        result += '\r\n Character Count: ' + characterCount;
 
         const spaceCount = text.split(' ').length - 1;
-        result += ' Space Count: ' + spaceCount;
+        result += '\r\n Space Count: ' + spaceCount;
 
         const m = text.match(/[aeiou]/gi);
         const vowelCount = m === null ? 0 : m.length;
-        result += ' Vowel Count: ' + vowelCount;
-
-        const keywordCount = text.toUpperCase().split(' ').filter(x => x === input.toUpperCase()).length;
-        result += ' Keyword ' + input + ' found ' + keywordCount + ' times.';
+        result += '\r\n Vowel Count: ' + vowelCount;
     }
 
     return result;
