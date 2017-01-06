@@ -87,7 +87,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
                     var message = new builder.Message()
                         .attachmentLayout(builder.AttachmentLayout.carousel)
                         .attachments(reviews.map(reviewAsAttachment));
-                    session.send(message)
+                    session.send(message);
                 });
         }
     })
@@ -96,7 +96,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
         session.send('Sorry, I did not understand \'%s\'. Type \'help\' if you need assistance.', session.message.text);
     });
 
-if (process.env.IS_SPELL_CORRECTION_ENABLED == 'true') {
+if (process.env.IS_SPELL_CORRECTION_ENABLED === 'true') {
     bot.use({
         botbuilder: function (session, next) {
             spellService
@@ -133,5 +133,5 @@ function reviewAsAttachment(review) {
     return new builder.ThumbnailCard()
         .title(review.title)
         .text(review.text)
-        .images([new builder.CardImage().url(review.image)])
+        .images([new builder.CardImage().url(review.image)]);
 }
