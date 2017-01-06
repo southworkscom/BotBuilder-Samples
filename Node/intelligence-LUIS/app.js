@@ -26,7 +26,7 @@ const LuisModelUrl = process.env.LUIS_MODEL_URL;
 
 // Main dialog with LUIS
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
-var intents = new builder.IntentDialog({ recognizers: [recognizer] })
+bot.dialog('/', new builder.IntentDialog({ recognizers: [recognizer] })
     .matches('SearchHotels', [
         function (session, args, next) {
             session.send('Welcome to the Hotels finder! We are analyzing your message: \'%s\'', session.message.text);
@@ -94,7 +94,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     .matches('Help', builder.DialogAction.send('Hi! Try asking me things like \'search hotels in Seattle\', \'search hotels near LAX airport\' or \'show me the reviews of The Bot Resort\''))
     .onDefault((session) => {
         session.send('Sorry, I did not understand \'%s\'. Type \'help\' if you need assistance.', session.message.text);
-    });
+    }));
 
 if (process.env.IS_SPELL_CORRECTION_ENABLED === 'true') {
     bot.use({
@@ -112,8 +112,6 @@ if (process.env.IS_SPELL_CORRECTION_ENABLED === 'true') {
         }
     });
 }
-
-bot.dialog('/', intents);
 
 // Helpers
 function hotelAsAttachment(hotel) {
