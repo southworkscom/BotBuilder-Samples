@@ -15,7 +15,7 @@ The minimum prerequisites to run this sample are:
 
 ### Code Highlights
 
-Bot Builder uses dialogs to model a conversational process, the exchange of messages, between bot and user. [bot.beginDialog()](app.js#L32) can be used to proactively start a new dialog to interact with the user.
+Bot Builder uses dialogs to model a conversational process, the exchange of messages, between bot and user. [bot.beginDialog()](app.js#L39) can be used to proactively start a new dialog to interact with the user.
 Because, an address is required to initiate a new conversation, this user address should be saved during any previous conversation with the user. 
 Any current conversation between the bot and user will be replaced with a new dialog stack.
 Alternatively, [bot.send()](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.universalbot.html#send) can be used to send a message without starting a dialog. 
@@ -26,10 +26,10 @@ Alternatively, [bot.send()](https://docs.botframework.com/en-us/node/builder/cha
 var address = session.message.address;
 delete address.conversation;
 
-// then... on another scope
+// (then, on another scope)
 
 // start survey dialog using stored address
-bot.beginDialog(address, '/survey');
+bot.beginDialog(address, 'survey');
 ````
 
 ### Outcome
