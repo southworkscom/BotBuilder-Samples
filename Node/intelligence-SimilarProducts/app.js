@@ -13,8 +13,8 @@ const builder = require('botbuilder'),
     url = require('url'),
     validUrl = require('valid-url');
 
-// Maximum number of hero cards to be returned in the carousel. If this number is greater than 5, skype throws an exception.
-const MAX_CARD_COUNT = 5;
+// Maximum number of hero cards to be returned in the carousel. If this number is greater than 10, skype throws an exception.
+const MAX_CARD_COUNT = 10;
 
 //=========================================================
 // Bot Setup
