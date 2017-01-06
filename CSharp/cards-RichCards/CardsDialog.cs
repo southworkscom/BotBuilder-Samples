@@ -142,17 +142,19 @@
 
         private static Attachment GetAnimationCard()
         {
-            var currentUrl = HttpContext.Current.Request.Url;
-
             var animationCard = new AnimationCard
             {
                 Title = "Microsoft Bot Framework",
                 Subtitle = "Animation Card",
-                Media = new List<MediaUrl>()
+                Image = new ThumbnailUrl
+                {
+                    Url = "https://docs.botframework.com/en-us/images/faq-overview/botframework_overview_july.png"
+                },
+                Media = new List<MediaUrl>
                 {
                     new MediaUrl()
                     {
-                        Url = new UriBuilder(currentUrl.Scheme, currentUrl.Host, currentUrl.Port, "/images/botframework.gif").ToString()
+                        Url = "http://i.giphy.com/Ki55RUbOV5njy.gif"
                     }
                 }
             };
@@ -164,23 +166,27 @@
         {
             var videoCard = new VideoCard
             {
-                Title = "Microsoft Bot Framework and how we created the Azure Bot",
-                Subtitle = "by Thiago Almeida",
-                Text = "At Microsoft, we have first-hand experience writing bots and building artificial intelligence systems, so we’ve shared our services and tools so you can use them to add conversations to your own products. In this session we will cover the Microsoft Bot Framework and it's three components: the Microsoft Cognitive Services, the Bot Builder SDK, and the Bot Connector. We will also show the code and details about the Azure Bot and how it was built.",
-                Media = new List<MediaUrl>()
+                Title = "Big Buck Bunny",
+                Subtitle = "by the Blender Institute",
+                Text = "Big Buck Bunny (code-named Peach) is a short computer-animated comedy film by the Blender Institute, part of the Blender Foundation. Like the foundation's previous film Elephants Dream, the film was made using Blender, a free software application for animation made by the same foundation. It was released as an open-source film under Creative Commons License Attribution 3.0.",
+                Image = new ThumbnailUrl
+                {
+                    Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/220px-Big_buck_bunny_poster_big.jpg"
+                },
+                Media = new List<MediaUrl>
                 {
                     new MediaUrl()
                     {
-                        Url = "http://video.ch9.ms/ch9/15ec/8933d06d-a6cd-460b-8a52-245ab52515ec/BotFramework_mid.mp4"
+                        Url = "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"  
                     }
                 },
-                Buttons = new List<CardAction>()
+                Buttons = new List<CardAction>
                 {
                     new CardAction()
                     {
-                        Title = "See more in Channel9",
+                        Title = "Learn More",
                         Type = ActionTypes.OpenUrl,
-                        Value = "https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Microsoft-Bot-Framework-and-how-we-created-the-Azure-Bot"
+                        Value = "https://peach.blender.org/"
                     }
                 }
             };
@@ -192,23 +198,27 @@
         {
             var audioCard = new AudioCard
             {
-                Title = "Introduction to the Microsoft Bot Framework",
-                Subtitle = "by Thiago Almeida",
-                Text = "Bots are increasingly popular and useful in many scenarios. In this session you will learn what options you have and how to get started building Bots using the Microsoft Bot Framework and other technologies such as LUIS.",
-                Media = new List<MediaUrl>()
+                Title = "I am your father",
+                Subtitle = "Star Wars: Episode V - The Empire Strikes Back",
+                Text = "The Empire Strikes Back (also known as Star Wars: Episode V – The Empire Strikes Back) is a 1980 American epic space opera film directed by Irvin Kershner. Leigh Brackett and Lawrence Kasdan wrote the screenplay, with George Lucas writing the film's story and serving as executive producer. The second installment in the original Star Wars trilogy, it was produced by Gary Kurtz for Lucasfilm Ltd. and stars Mark Hamill, Harrison Ford, Carrie Fisher, Billy Dee Williams, Anthony Daniels, David Prowse, Kenny Baker, Peter Mayhew and Frank Oz.",
+                Image = new ThumbnailUrl
+                {
+                    Url = "https://upload.wikimedia.org/wikipedia/en/3/3c/SW_-_Empire_Strikes_Back.jpg"
+                },
+                Media = new List<MediaUrl>
                 {
                     new MediaUrl()
                     {
-                        Url = "http://video.ch9.ms/ch9/abcc/d1e3ab3f-2d06-4c62-92d1-56c36a9cabcc/IntroBot.mp3"
+                        Url = "http://www.wavlist.com/movies/004/father.wav"
                     }
                 },
-                Buttons = new List<CardAction>()
+                Buttons = new List<CardAction>
                 {
                     new CardAction()
                     {
-                        Title = "See more in Channel9",
+                        Title = "Read More",
                         Type = ActionTypes.OpenUrl,
-                        Value = "https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Introduction-to-the-Microsoft-Bot-Framework"
+                        Value = "https://en.wikipedia.org/wiki/The_Empire_Strikes_Back"
                     }
                 }
             };
