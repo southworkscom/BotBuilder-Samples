@@ -15,7 +15,7 @@ The minimum prerequisites to run this sample are:
 
 ### Code Highlights
 
-Many messaging channels provide the ability to attach richer objects. The Bot Framework has the ability to render rich cards as attachments. There are several types of cards supported: Hero Card, Thumbnail Card, Receipt Card and Sign-In Card. Once the desired Card type is selected, it is mapped into an `Attachment` data structure. Check out the key code located in [app.js](app.js#L28-L34) where a card is attached to the constructed message.
+Many messaging channels provide the ability to attach richer objects. The Bot Framework has the ability to render rich cards as attachments. There are several types of cards supported: Hero Card, Thumbnail Card, Receipt Card and Sign-In Card. Once the desired Card type is selected, it is mapped into an `Attachment` data structure. Check out the key code located in [app.js](app.js#L26-L32) where a card is attached to the constructed message.
 
 ````JavaScript
 function (session, results) {
@@ -32,7 +32,7 @@ function (session, results) {
 
 #### Hero Card
 
-The Hero card is a multipurpose card; it primarily hosts a single large image, a button, and a "tap action", along with text content to display on the card. Check out the `createHeroCard` function in [app.js](app.js#L59-L66) for a Hero Card sample.
+The Hero card is a multipurpose card; it primarily hosts a single large image, a button, and a "tap action", along with text content to display on the card. Check out the `createHeroCard` function in [app.js](app.js#L57-L64) for a Hero Card sample.
 
 ````JavaScript
 function createHeroCard(session) {
@@ -46,7 +46,7 @@ function createHeroCard(session) {
 ````
 
 #### Thumbnail Card
-The Thumbnail card is a multipurpose card; it primarily hosts a single small image, a button, and a "tap action", along with text content to display on the card. Check out the `createThumbnailCard` function in [app.js](app.js#L68-L75) for a Thumbnail Card sample.
+The Thumbnail card is a multipurpose card; it primarily hosts a single small image, a button, and a "tap action", along with text content to display on the card. Check out the `createThumbnailCard` function in [app.js](app.js#L66-L73) for a Thumbnail Card sample.
 
 ```JavaScript
 function createThumbnailCard(session) {
@@ -60,7 +60,7 @@ function createThumbnailCard(session) {
 ````
 
 #### Receipt Card
-The receipt card allows the Bot to present a receipt to the user. Check out the `createReceiptCard` function in [app.js](app.js#L78-L99) for a Receipt Card sample.
+The receipt card allows the Bot to present a receipt to the user. Check out the `createReceiptCard` function in [app.js](app.js#L76-L97) for a Receipt Card sample.
 
 ````JavaScript
 function createReceiptCard(session) {
@@ -88,7 +88,7 @@ function createReceiptCard(session) {
 ````
 
 #### Sign-In Card
-The Sign-In card is a card representing a request to sign in the user. Check out the `createSigninCard` function in [app.js](app.js#L101-L105) class for a Sign-In Card sample.
+The Sign-In card is a card representing a request to sign in the user. Check out the `createSigninCard` function in [app.js](app.js#L99-L103) class for a Sign-In Card sample.
 
 > Note: The sign in card can be used to initiate an authentication flow which is beyond this sample. For a complete authentication flow sample take a look at [AuthBot](https://github.com/MicrosoftDX/AuthBot) (Please, notice the samples are currently in C# only).
 
