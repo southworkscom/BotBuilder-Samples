@@ -146,13 +146,11 @@ private static Attachment GetAnimationCard()
 ````
 
 #### Video Card
-The Video card is a card that’s capable of playing videos. Check out the `GetVideoCard` method in the [CardsDialog](CardsDialog.cs#L163-L191) class for a Video Card sample.
+The Video card is a card that’s capable of playing videos. Check out the `GetVideoCard` method in the [CardsDialog](CardsDialog.cs#L163-L189) class for a Video Card sample.
 
 ````C#
 private static Attachment GetVideoCard()
 {
-    var currentUrl = HttpContext.Current.Request.Url;
-
     var videoCard = new VideoCard
     {
         Title = "Microsoft Bot Framework and how we created the Azure Bot",
@@ -181,13 +179,11 @@ private static Attachment GetVideoCard()
 ````
 
 #### Audio Card
-The Audio card is a card that’s capable of playing an audio file. Check out the `GetAudioCard` method in the [CardsDialog](CardsDialog.cs#L193-L221) class for an Audio Card sample.
+The Audio card is a card that’s capable of playing an audio file. Check out the `GetAudioCard` method in the [CardsDialog](CardsDialog.cs#L191-L217) class for an Audio Card sample.
 
 ````C#
 private static Attachment GetAudioCard()
 {
-    var currentUrl = HttpContext.Current.Request.Url;
-
     var audioCard = new AudioCard
     {
         Title = "Introduction to the Microsoft Bot Framework",
@@ -242,6 +238,25 @@ You will see the following in the Bot Framework Emulator, Facebook Messenger and
 | Emulator | Facebook | Skype |
 |----------|-------|----------|
 |![Sample Outcome Sign-In Card](images/outcome-signin-emulator.png)|![Sample Outcome Sign-In Card](images/outcome-signin-facebook.png)|![Sample Outcome Sign-In Card](images/outcome-signin-skype.png)|
+
+#### Animation Card
+
+| Emulator | Facebook | Skype |
+|----------|-------|----------|
+|![Sample Outcome Animation Card](images/outcome-animation-emulator.png)|![Sample Outcome Animation Card](images/outcome-animation-facebook.png)|![Sample Outcome Animation Card](images/outcome-animation-skype.png)|
+
+#### Video Card
+
+| Emulator | Facebook | Skype |
+|----------|-------|----------|
+|![Sample Outcome Video Card](images/outcome-video-emulator.png)|![Sample Outcome Video Card](images/outcome-video-facebook.png)|![Sample Outcome Video Card](images/outcome-video-skype.png)|
+
+#### Audio Card
+
+| Emulator | Facebook | Skype |
+|----------|-------|----------|
+|![Sample Outcome Audio Card](images/outcome-audio-emulator.png)|![Sample Outcome Audio Card](images/outcome-audio-facebook.png)|![Sample Outcome Audio Card](images/outcome-audio-skype.png)|
+
 
 ### More Information
 

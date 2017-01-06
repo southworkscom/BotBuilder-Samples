@@ -162,8 +162,6 @@
 
         private static Attachment GetVideoCard()
         {
-            var currentUrl = HttpContext.Current.Request.Url;
-
             var videoCard = new VideoCard
             {
                 Title = "Microsoft Bot Framework and how we created the Azure Bot",
@@ -192,8 +190,6 @@
 
         private static Attachment GetAudioCard()
         {
-            var currentUrl = HttpContext.Current.Request.Url;
-
             var audioCard = new AudioCard
             {
                 Title = "Introduction to the Microsoft Bot Framework",
