@@ -1,8 +1,8 @@
 var util = require('util');
 var builder = require('botbuilder');
 
-const library = new builder.Library('shop');
-library.dialog('/', [
+const lib = new builder.Library('shop');
+lib.dialog('/', [
     function (session) {
         // Ask for delivery address using 'address' library
         session.beginDialog('address:/',
@@ -18,7 +18,7 @@ library.dialog('/', [
     function (session, args) {
         // Retrieve selection, continue to delivery date
         session.dialogData.selection = args.selection;
-        session.beginDialog('delivery:/date');
+        session.beginDialog('delivery:date');
     },
     function (session, args) {
         // Retrieve deliveryDate, continue to details
@@ -29,7 +29,7 @@ library.dialog('/', [
     function (session, args) {
         // Retrieve details, continue to billing address
         session.dialogData.details = args.details;
-        session.beginDialog('address:/billing');
+        session.beginDialog('address:billing');
     },
     function (session, args, next) {
         // Retrieve billing address
@@ -53,4 +53,7 @@ library.dialog('/', [
     }
 ]);
 
-module.exports = library;
+// Export createLibrary() function
+module.exports.createLibrary = function () {
+    return lib.clone();
+};

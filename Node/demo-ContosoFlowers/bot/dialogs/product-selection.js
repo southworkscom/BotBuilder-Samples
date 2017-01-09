@@ -12,11 +12,11 @@ var carouselOptions = {
     unknownOption: 'I couldn\'t understand your selection. Please try again.'
 };
 
-const library = new builder.Library('product-selection');
+const lib = new builder.Library('product-selection');
 
 // These steps are defined as a waterfall dialog,
 // but the control is done manually by calling the next func argument.
-library.dialog('/',
+lib.dialog('/',
     new SimpleWaterfallDialog([
         // First message
         function (session, args, next) {
@@ -67,6 +67,7 @@ function productMapping(product) {
     };
 }
 
-
-
-module.exports = library;
+// Export createLibrary() function
+module.exports.createLibrary = function () {
+    return lib.clone();
+};

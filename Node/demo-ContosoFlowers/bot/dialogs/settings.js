@@ -10,8 +10,8 @@ const SettingChoice = {
     Cancel: 'Go back'
 };
 
-var library = new builder.Library('settings');
-library.dialog('/', [
+var lib = new builder.Library('settings');
+lib.dialog('/', [
     // Display options
     function (session) {
         builder.Prompts.choice(
@@ -24,25 +24,26 @@ library.dialog('/', [
         args = args || {};
         var response = args.response || {};
         var option = response.entity;
+        var promptMessage;
         switch (option) {
             case SettingChoice.Email:
-                var promptMessage = 'Type your email or use (B)ack to return to the menu.';
+                promptMessage = 'Type your email or use (B)ack to return to the menu.';
                 if (session.userData.sender && session.userData.sender.email) {
                     promptMessage = 'This is your current email: ' + session.userData.sender.email + '.\n\nType a new email if you need to update, or use (B)ack to return to the menu.';
                 }
                 session.send(promptMessage);
-                return session.beginDialog('/email');
+                return session.beginDialog('email');
 
             case SettingChoice.Phone:
-                var promptMessage = 'Type your phone number or use (B)ack to return to the menu.';
+                promptMessage = 'Type your phone number or use (B)ack to return to the menu.';
                 if (session.userData.sender && session.userData.sender.phoneNumber) {
                     promptMessage = 'This is your current phone number: ' + session.userData.sender.phoneNumber + '.\n\nType a new number if you need to update, or use (B)ack to return to the menu.';
                 }
                 session.send(promptMessage);
-                return session.beginDialog('/phone');
+                return session.beginDialog('phone');
 
             case SettingChoice.Addresses:
-                return session.beginDialog('/addresses');
+                return session.beginDialog('addresses');
 
             case SettingChoice.Cancel:
                 return session.endDialog();
@@ -51,7 +52,7 @@ library.dialog('/', [
     // Setting updated/cancelled
     function (session, args) {
         args = args || {};
-        var text = !!args.updated ? 'Thanks! Your setting was updated!' : 'No setting was updated.';
+        var text = args.updated ? 'Thanks! Your setting was updated!' : 'No setting was updated.';
         session.send(text); 
         session.replaceDialog('/');
     }
@@ -60,20 +61,20 @@ library.dialog('/', [
 
 
 // Email edit
-library.dialog('/email', editOptionDialog(
+lib.dialog('email', editOptionDialog(
     (input) => validators.EmailRegex.test(input),
     'Something is wrong with that email address. Please try again.',
     (session, email) => saveSenderSetting(session, 'email', email)));
 
 // Phone Number edit
-library.dialog('/phone', editOptionDialog(
+lib.dialog('phone', editOptionDialog(
     (input) => validators.PhoneRegex.test(input),
     'Oops, that doesn\'t look like a valid number. Try again.',
     (session, phone) => saveSenderSetting(session, 'phoneNumber', phone)));
 
 // Addresses
 const UseSavedInfoChoices = addressLibrary.UseSavedInfoChoices;
-library.dialog('/addresses', [
+lib.dialog('addresses', [
     function(session, args, next) {
         
         // Check if an option was selected
@@ -148,4 +149,7 @@ function createAddressCard(session, buttonTitle, address) {
         ]);
 }
 
-module.exports = library;
+// Export createLibrary() function
+module.exports.createLibrary = function () {
+    return lib.clone();
+};

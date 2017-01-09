@@ -5,14 +5,14 @@ var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
-var bot = new builder.UniversalBot(connector, { persistUserData: true });
 
 // Welcome Dialog
 const MainOptions = {
     Shop: 'Order flowers',
     Support: 'Talk to support'
 };
-bot.dialog('/', (session) => {
+
+var bot = new builder.UniversalBot(connector, (session) => {
     if(session.message.text.trim().toUpperCase() === MainOptions.Shop.toUpperCase()) {
         // Order Flowers
         return session.beginDialog('shop:/');
@@ -35,18 +35,21 @@ bot.dialog('/', (session) => {
         .addAttachment(welcomeCard));
 });
 
+// Enable Conversation Data persistence
+bot.set('persistConversationData', true);
+
 // Sub-Dialogs
-bot.library(require('./dialogs/shop'));
-bot.library(require('./dialogs/address'));
-bot.library(require('./dialogs/product-selection'));
-bot.library(require('./dialogs/delivery'));
-bot.library(require('./dialogs/details'));
-bot.library(require('./dialogs/checkout'));
-bot.library(require('./dialogs/settings'));
-bot.library(require('./dialogs/help'));
+bot.library(require('./dialogs/shop').createLibrary());
+bot.library(require('./dialogs/address').createLibrary());
+bot.library(require('./dialogs/product-selection').createLibrary());
+bot.library(require('./dialogs/delivery').createLibrary());
+bot.library(require('./dialogs/details').createLibrary());
+bot.library(require('./dialogs/checkout').createLibrary());
+bot.library(require('./dialogs/settings').createLibrary());
+bot.library(require('./dialogs/help').createLibrary());
 
 // Validators
-bot.library(require('./validators'));
+bot.library(require('./validators').createLibrary());
 
 // Trigger secondary dialogs when 'settings' or 'support' is called
 const settingsRegex = /^settings/i;
@@ -92,7 +95,7 @@ function listen() {
 
 // Other wrapper functions
 function beginDialog(address, dialogId, dialogArgs) {
-    bot.beginDialog(address, dialogId, dialogArgs)
+    bot.beginDialog(address, dialogId, dialogArgs);
 }
 
 function sendMessage(message) {

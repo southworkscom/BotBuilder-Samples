@@ -1,10 +1,10 @@
 var util = require('util');
 var builder = require('botbuilder');
 
-const library = new builder.Library('details');
+const lib = new builder.Library('details');
 
 // Recipient & Sender details
-library.dialog('/', [
+lib.dialog('/', [
     function (session) {
         builder.Prompts.text(session, 'What\'s the recipient\'s first name?');
     },
@@ -14,7 +14,7 @@ library.dialog('/', [
     },
     function (session, args) {
         session.dialogData.recipientLastName = args.response;
-        session.beginDialog('validators:/phonenumber', {
+        session.beginDialog('validators:phonenumber', {
             prompt: 'What\'s the recipient\'s phone number?',
             retryPrompt: 'Oops, that doesn\'t look like a valid number. Try again.',
             maxRetries: Number.MAX_VALUE
@@ -22,7 +22,7 @@ library.dialog('/', [
     },
     function (session, args) {
         session.dialogData.recipientPhoneNumber = args.response;
-        session.beginDialog('validators:/notes', {
+        session.beginDialog('validators:notes', {
             prompt: 'What do you want the note to say? (in 200 characters)',
             retryPrompt: 'Oops, the note is max 200 characters. Try again.',
             maxRetries: Number.MAX_VALUE
@@ -30,7 +30,7 @@ library.dialog('/', [
     },
     function (session, args) {
         session.dialogData.note = args.response;
-        session.beginDialog('/sender');
+        session.beginDialog('sender');
     },
     function (session, args) {
         session.dialogData.sender = args.sender;
@@ -53,10 +53,10 @@ const UseSavedInfoChoices = {
     No: 'Edit'
 };
 
-library.dialog('/sender', [
+lib.dialog('sender', [
     function (session, args, next) {
         var sender = session.userData.sender;
-        if (!!sender) {
+        if (sender) {
             // sender data previously saved
             var promptMessage = util.format('Would you like to use this email %s and this phone number \'%s\' info?', sender.email, sender.phoneNumber);
             builder.Prompts.choice(session, promptMessage, [UseSavedInfoChoices.Yes, UseSavedInfoChoices.No]);
@@ -79,7 +79,7 @@ library.dialog('/sender', [
         if (session.dialogData.useSaved) {
             return next();
         }
-        session.beginDialog('validators:/email', {
+        session.beginDialog('validators:email', {
             prompt: 'What\'s your email?',
             retryPrompt: 'Something is wrong with that email address. Please try again.',
             maxRetries: Number.MAX_VALUE
@@ -90,7 +90,7 @@ library.dialog('/sender', [
             return next();
         }
         session.dialogData.email = args.response;
-        session.beginDialog('validators:/phonenumber', {
+        session.beginDialog('validators:phonenumber', {
             prompt: 'What\'s your phone number?',
             retryPrompt: 'Oops, that doesn\'t look like a valid number. Try again.',
             maxRetries: Number.MAX_VALUE
@@ -120,4 +120,7 @@ library.dialog('/sender', [
     }
 ]);
 
-module.exports = library;
+// Export createLibrary() function
+module.exports.createLibrary = function () {
+    return lib.clone();
+};

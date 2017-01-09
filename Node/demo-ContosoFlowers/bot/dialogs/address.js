@@ -1,13 +1,13 @@
 var builder = require('botbuilder');
 var locationService = require('../../services/location');
 
-const library = new builder.Library('address');
+const lib = new builder.Library('address');
 
 // Address constants
 const InvalidAddress = 'Sorry, I could not understand that address. Can you try again? (Number, street, city, state, and ZIP)';
 const ConfirmChoice = 'Use this address';
 const EditChoice = 'Edit';
-library.dialog('/', [
+lib.dialog('/', [
     function (session, args) {
         // Ask for address
         args = args || {};
@@ -32,7 +32,7 @@ library.dialog('/', [
                     // Valid address, continue
                     next({ response: addresses[0] });
                 } else {
-                    session.beginDialog('/choose', { addresses });
+                    session.beginDialog('choose', { addresses });
                 }
             }).catch((err) => {
                 // Validation error, retry dialog
@@ -61,7 +61,7 @@ library.dialog('/', [
 ]);
 
 // Select address from list
-library.dialog('/choose',
+lib.dialog('choose',
     function (session, args) {
         args = args || {};
         var addresses = args.addresses;
@@ -82,7 +82,7 @@ library.dialog('/choose',
             addresses = session.dialogData.addresses;
             if (addresses.indexOf(address) === -1) {
                 // not a valid selection
-                session.replaceDialog('/choose', { addresses });
+                session.replaceDialog('choose', { addresses });
             } else {
                 // return
                 session.endDialogWithResult({ response: address });
@@ -97,7 +97,7 @@ const UseSavedInfoChoices = {
     Work: 'Work address',
     NotThisTime: 'No, thanks!'
 };
-library.dialog('/billing', [
+lib.dialog('billing', [
     function (session, args, next) {
         var selection = session.message.text;
         var saved = session.userData.billingAddresses = session.userData.billingAddresses || {};
@@ -182,5 +182,9 @@ function createAddressCard(session, buttonTitle, address) {
         ]);
 }
 
-module.exports = library;
 module.exports.UseSavedInfoChoices = UseSavedInfoChoices;
+
+// Export createLibrary() function
+module.exports.createLibrary = function () {
+    return lib.clone();
+};

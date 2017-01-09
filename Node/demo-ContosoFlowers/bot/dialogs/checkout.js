@@ -4,14 +4,14 @@ var botUtils = require('../utils');
 var siteUrl = require('../site-url');
 var orderService = require('../../services/orders');
 
-const library = new builder.Library('checkout');
+const lib = new builder.Library('checkout');
 
 // Checkout flow
-const RestartMessage = 'Changed my mind'
+const RestartMessage = 'Changed my mind';
 const StartOver = 'Start over';
 const KeepGoing = 'Keep going';
 const Help = 'Talk to support';
-library.dialog('/', [
+lib.dialog('/', [
     function (session, args, next) {
         args = args || {};
         var order = args.order;
@@ -62,7 +62,7 @@ library.dialog('/', [
 ]);
 
 // Checkout completed (initiated from web application. See /checkout.js in the root folder)
-library.dialog('/completed', function (session, args, next) {
+lib.dialog('completed', function (session, args, next) {
     args = args || {};
     var orderId = args.orderId;
 
@@ -88,11 +88,11 @@ library.dialog('/completed', function (session, args, next) {
             .title(order.paymentDetails.creditcardHolder)
             .facts([
                 builder.Fact.create(session, order.id, 'Order Number'),
-                builder.Fact.create(session, offuscateNumber(order.paymentDetails.creditcardNumber), 'Payment Method'),
+                builder.Fact.create(session, offuscateNumber(order.paymentDetails.creditcardNumber), 'Payment Method')
             ])
             .items([
                 builder.ReceiptItem.create(session, order.selection.price, order.selection.name)
-                    .image(builder.CardImage.create(session, order.selection.imageUrl)),
+                    .image(builder.CardImage.create(session, order.selection.imageUrl))
             ])
             .total(order.selection.price)
             .buttons([
@@ -101,11 +101,11 @@ library.dialog('/completed', function (session, args, next) {
 
         var message = new builder.Message(session)
             .text(messageText)
-            .addAttachment(receiptCard)
+            .addAttachment(receiptCard);
 
         session.endDialog(message);
     }).catch((err) => {
-        session.endDialog(util.format('An error has ocurred: %s', err.message))
+        session.endDialog(util.format('An error has ocurred: %s', err.message));
     });
 });
 
@@ -114,4 +114,7 @@ function offuscateNumber(cardNumber) {
     return cardNumber.substring(0, 4) + ' ****';
 }
 
-module.exports = library;
+// Export createLibrary() function
+module.exports.createLibrary = function () {
+    return lib.clone();
+};

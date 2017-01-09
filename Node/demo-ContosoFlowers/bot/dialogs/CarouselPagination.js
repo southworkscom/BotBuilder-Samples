@@ -12,15 +12,15 @@ module.exports = {
     create: function (getPageFunc, getItemFunc, itemToCardFunc, settings) {
         // parameter validation
         settings = Object.assign({}, defaultSettings, settings);
-        if (typeof (getPageFunc) !== 'function') {
+        if (typeof getPageFunc !== 'function') {
             throw new Error('getPageFunc must be a function');
         }
 
-        if (typeof (getItemFunc) !== 'function') {
+        if (typeof getItemFunc !== 'function') {
             throw new Error('getItemFunc must be a function');
         }
 
-        if (typeof (itemToCardFunc) !== 'function') {
+        if (typeof itemToCardFunc !== 'function') {
             throw new Error('itemToCardFunc must be a function');
         }
 
@@ -40,7 +40,7 @@ module.exports = {
             }
 
             if (cardInfo.imageUrl) {
-                card = card.images([new builder.CardImage().url(cardInfo.imageUrl).alt(cardInfo.title)])
+                card = card.images([new builder.CardImage().url(cardInfo.imageUrl).alt(cardInfo.title)]);
             }
 
             return card;
@@ -95,7 +95,7 @@ module.exports = {
                     session.send(new builder.Message(session).addAttachment(moreCard));
                 }
             });
-        }
+        };
     }
 };
 
