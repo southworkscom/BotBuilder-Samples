@@ -75,7 +75,7 @@ var activities = from x in activitySet.Activities
                     select x;
 ````
 
-DirectLine v3.0 (unlike version 1.1) has supports for Attachments (see [Adding Attachments to a Message](https://docs.botframework.com/en-us/core-concepts/attachments) for more information about attachments). Check out the `ReadBotMessagesAsync` method in [Program.cs](DirectLineClient/Program.cs#L75-L92) to see where the Attachments are retrieved and rendered appropriately based on their type.
+DirectLine v3.0 (unlike version 1.1) has support for Attachments (see [Adding Attachments to a Message](https://docs.botframework.com/en-us/core-concepts/attachments) for more information about attachments). Check out the `ReadBotMessagesAsync` method in [Program.cs](DirectLineClient/Program.cs#L75-L92) to see how the Attachments are retrieved and rendered appropriately based on their type.
 
 
 ````C#
