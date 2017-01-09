@@ -38,7 +38,7 @@ bot.dialog('/', function (session) {
             break;
 
         case 'send me a botframework image':
-            reply.text('Sample message using the BotBuilder Attachment structure')
+            reply.text('Sample message with an Image attachment')
                 .addAttachment({
                     contentUrl: 'https://docs.botframework.com/en-us/images/faq-overview/botframework_overview_july.png',
                     contentType: 'image/png',
