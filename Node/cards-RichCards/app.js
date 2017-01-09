@@ -37,7 +37,10 @@ const HeroCardName = 'Hero card';
 const ThumbnailCardName = 'Thumbnail card';
 const ReceiptCardName = 'Receipt card';
 const SigninCardName = 'Sign-in card';
-const CardNames = [HeroCardName, ThumbnailCardName, ReceiptCardName, SigninCardName];
+const AnimationCardName = "Animation card";
+const VideoCardName = "Video card";
+const AudioCardName = "Audio card";
+const CardNames = [HeroCardName, ThumbnailCardName, ReceiptCardName, SigninCardName, AnimationCardName, VideoCardName, AudioCardName];
 
 function createCard(selectedCardName, session) {
     switch (selectedCardName) {
@@ -49,6 +52,12 @@ function createCard(selectedCardName, session) {
             return createReceiptCard(session);
         case SigninCardName:
             return createSigninCard(session);
+        case AnimationCardName:
+            return createAnimationCard(session);
+        case VideoCardName:
+            return createVideoCard(session);
+        case AudioCardName:
+            return createAudioCard(session);
         default:
             return createHeroCard(session);
     }
@@ -100,6 +109,43 @@ function createSigninCard(session) {
     return new builder.SigninCard(session)
         .text('BotFramework Sign-in Card')
         .button('Sign-in', 'https://login.microsoftonline.com');
+}
+
+function createAnimationCard(session) {
+    return new builder.AnimationCard(session)
+        .title('Microsoft Bot Framework')
+        .subtitle('Animation Card')
+        .media([
+            { url: 'https://bot-framework.azureedge.net/videos/skype-hero-sm.mp4' }
+        ]);
+}
+
+function createVideoCard(session) {
+    return new builder.VideoCard(session)
+        .title('Microsoft Bot Framework and how we created the Azure Bot')
+        .subtitle('by Thiago Almeida')
+        .text('At Microsoft, we have first-hand experience writing bots and building artificial intelligence systems, so we’ve shared our services and tools so you can use them to add conversations to your own products. In this session we will cover the Microsoft Bot Framework and it\'s three components: the Microsoft Cognitive Services, the Bot Builder SDK, and the Bot Connector. We will also show the code and details about the Azure Bot and how it was built.')
+        .media([
+            { url: 'http://video.ch9.ms/ch9/15ec/8933d06d-a6cd-460b-8a52-245ab52515ec/BotFramework_mid.mp4' }
+        ])
+        .autoloop(true)
+        .autostart(true)
+        .buttons([
+            builder.CardAction.openUrl(session, 'https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Microsoft-Bot-Framework-and-how-we-created-the-Azure-Bot', 'See more in Channel9')
+        ]);
+}
+
+function createAudioCard(session) {
+    return new builder.AudioCard(session)
+        .title('Introduction to the Microsoft Bot Framework')
+        .subtitle('by Thiago Almeida')
+        .text('Bots are increasingly popular and useful in many scenarios. In this session you will learn what options you have and how to get started building Bots using the Microsoft Bot Framework and other technologies such as LUIS.')
+        .media([
+            { url: 'http://video.ch9.ms/ch9/abcc/d1e3ab3f-2d06-4c62-92d1-56c36a9cabcc/IntroBot.mp3' }
+        ])
+        .buttons([
+            builder.CardAction.openUrl(session, 'https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Introduction-to-the-Microsoft-Bot-Framework', 'See more in Channel9')
+        ]);
 }
 
 function getSampleCardImages(session) {
