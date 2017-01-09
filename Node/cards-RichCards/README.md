@@ -147,7 +147,7 @@ function createVideoCard(session) {
 > Note: At the time of writing this sample, Skype requires the Video card to have a Thumbnail Url.
 
 #### Audio Card
-The Audio card is a card that’s capable of playing an audio file. Check out the `createAudioCard` method in [app.js](app.js#L146-158) for an Audio Card sample.
+The Audio card is a card that’s capable of playing an audio file. Check out the `createAudioCard` method in [app.js](app.js#L146-L158) for an Audio Card sample.
 
 ````JavaScript
 function createAudioCard(session) {
