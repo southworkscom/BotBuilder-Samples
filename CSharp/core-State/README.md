@@ -105,10 +105,7 @@ Subsequently, you can start a new conversation (In the Bot Framework Channel Emu
 
 ![Sample Outcome](images/outcome-2.png)
 
-When a another user arrives to the conversation (In the Bot Framework Emulator this is done by editing the 'User' field) the bot will remember its name (Or prompt for the user name depending on any previous conversation) and maintain the previous search city set.
-
-![Sample Outcome](images/outcome-3.png)
-
+### More Information
 
 To get more information about how to get started in Bot Builder for .NET and Conversations please review the following resources:
 * [Bot Builder for .NET](https://docs.botframework.com/en-us/csharp/builder/sdkreference/index.html)
