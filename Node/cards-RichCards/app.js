@@ -68,8 +68,12 @@ function createHeroCard(session) {
         .title('BotFramework Hero Card')
         .subtitle('Your bots — wherever your users are talking')
         .text('Build and connect intelligent bots to interact with your users naturally wherever they are, from text/sms to Skype, Slack, Office 365 mail and other popular services.')
-        .images(getSampleCardImages(session))
-        .buttons(getSampleCardActions(session));
+        .images([
+            builder.CardImage.create(session, 'https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg')
+        ])
+        .buttons([
+            builder.CardAction.openUrl(session, 'https://docs.botframework.com/en-us/', 'Get Started')
+        ]);
 }
 
 function createThumbnailCard(session) {
@@ -77,8 +81,12 @@ function createThumbnailCard(session) {
         .title('BotFramework Thumbnail Card')
         .subtitle('Your bots — wherever your users are talking')
         .text('Build and connect intelligent bots to interact with your users naturally wherever they are, from text/sms to Skype, Slack, Office 365 mail and other popular services.')
-        .images(getSampleCardImages(session))
-        .buttons(getSampleCardActions(session));
+        .images([
+            builder.CardImage.create(session, 'https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg')
+        ])
+        .buttons([
+            builder.CardAction.openUrl(session, 'https://docs.botframework.com/en-us/', 'Get Started')
+        ]);
 }
 
 var order = 1234;
@@ -115,47 +123,36 @@ function createAnimationCard(session) {
     return new builder.AnimationCard(session)
         .title('Microsoft Bot Framework')
         .subtitle('Animation Card')
+        .image(builder.CardImage.create(session, 'https://docs.botframework.com/en-us/images/faq-overview/botframework_overview_july.png'))
         .media([
-            { url: 'https://bot-framework.azureedge.net/videos/skype-hero-sm.mp4' }
+            { url: 'http://i.giphy.com/Ki55RUbOV5njy.gif' }
         ]);
 }
 
 function createVideoCard(session) {
     return new builder.VideoCard(session)
-        .title('Microsoft Bot Framework and how we created the Azure Bot')
-        .subtitle('by Thiago Almeida')
-        .text('At Microsoft, we have first-hand experience writing bots and building artificial intelligence systems, so we’ve shared our services and tools so you can use them to add conversations to your own products. In this session we will cover the Microsoft Bot Framework and it\'s three components: the Microsoft Cognitive Services, the Bot Builder SDK, and the Bot Connector. We will also show the code and details about the Azure Bot and how it was built.')
+        .title('Big Buck Bunny')
+        .subtitle('by the Blender Institute')
+        .text('Big Buck Bunny (code-named Peach) is a short computer-animated comedy film by the Blender Institute, part of the Blender Foundation. Like the foundation\'s previous film Elephants Dream, the film was made using Blender, a free software application for animation made by the same foundation. It was released as an open-source film under Creative Commons License Attribution 3.0.')
+        .image(builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/220px-Big_buck_bunny_poster_big.jpg'))
         .media([
-            { url: 'http://video.ch9.ms/ch9/15ec/8933d06d-a6cd-460b-8a52-245ab52515ec/BotFramework_mid.mp4' }
+            { url: 'http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4' }
         ])
-        .autoloop(true)
-        .autostart(true)
         .buttons([
-            builder.CardAction.openUrl(session, 'https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Microsoft-Bot-Framework-and-how-we-created-the-Azure-Bot', 'See more in Channel9')
+            builder.CardAction.openUrl(session, 'https://peach.blender.org/', 'Learn More')
         ]);
 }
 
 function createAudioCard(session) {
     return new builder.AudioCard(session)
-        .title('Introduction to the Microsoft Bot Framework')
-        .subtitle('by Thiago Almeida')
-        .text('Bots are increasingly popular and useful in many scenarios. In this session you will learn what options you have and how to get started building Bots using the Microsoft Bot Framework and other technologies such as LUIS.')
+        .title('I am your father')
+        .subtitle('Star Wars: Episode V - The Empire Strikes Back')
+        .text('The Empire Strikes Back (also known as Star Wars: Episode V – The Empire Strikes Back) is a 1980 American epic space opera film directed by Irvin Kershner. Leigh Brackett and Lawrence Kasdan wrote the screenplay, with George Lucas writing the film\'s story and serving as executive producer. The second installment in the original Star Wars trilogy, it was produced by Gary Kurtz for Lucasfilm Ltd. and stars Mark Hamill, Harrison Ford, Carrie Fisher, Billy Dee Williams, Anthony Daniels, David Prowse, Kenny Baker, Peter Mayhew and Frank Oz.')
+        .image(builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/en/3/3c/SW_-_Empire_Strikes_Back.jpg'))
         .media([
-            { url: 'http://video.ch9.ms/ch9/abcc/d1e3ab3f-2d06-4c62-92d1-56c36a9cabcc/IntroBot.mp3' }
+            { url: 'http://www.wavlist.com/movies/004/father.wav' }
         ])
         .buttons([
-            builder.CardAction.openUrl(session, 'https://channel9.msdn.com/events/TechDays/Techdays-2016-The-Netherlands/Introduction-to-the-Microsoft-Bot-Framework', 'See more in Channel9')
+            builder.CardAction.openUrl(session, 'https://en.wikipedia.org/wiki/The_Empire_Strikes_Back', 'Read More')
         ]);
-}
-
-function getSampleCardImages(session) {
-    return [
-        builder.CardImage.create(session, 'https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg')
-    ];
-}
-
-function getSampleCardActions(session) {
-    return [
-        builder.CardAction.openUrl(session, 'https://docs.botframework.com/en-us/', 'Get Started')
-    ];
 }
