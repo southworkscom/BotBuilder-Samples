@@ -543,9 +543,9 @@ bot.set('localizerSettings', {
 });
 ````
 
-The default localization system for Bot Builder is file based and lets a bot support multiple languages using JSON files stored on disk. By default, the localization system will search for the bots prompts in the ./locale/<IETF TAG>/index.json file where <IETF TAG> is a valid [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) representing the preferred locale to use the prompts for. 
+The default localization system for Bot Builder is file based and lets a bot support multiple languages using JSON files stored on disk. By default, the localization system will search for the bots prompts in the ./locale/[IETF TAG]/index.json file where [IETF TAG] is a valid [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) representing the preferred locale to use the prompts for. 
 
-You can see in the previous code snippet that we are providing a locale path to tell the SDK where to look for language files. Each files corresponds to a another file in the [bot's dialogs folder](bot/dialogs). These files contain the resource strings used by each dialog. E.g.:
+You can see in the previous code snippet that we are providing a locale path to inform the SDK where to look for language files. Each file in [this folder](bot/locale/en) corresponds to a another file in the [bot's dialogs folder](bot/dialogs). They contain the resource strings used by each dialog. E.g.:
 
 ````JavaScript
 // bot/locale/en/index.js
