@@ -7,7 +7,7 @@ lib.dialog('/', [
         // Ask for delivery address using 'address' library
         session.beginDialog('address:/',
             {
-                promptMessage: util.format('%s, please enter the delivery address for these flowers. Include apartment # if needed.', session.message.user.name || "User")
+                promptMessage: session.gettext('provide_delivery_address', session.message.user.name || session.gettext('default_user_name'))
             });
     },
     function (session, args) {
@@ -23,7 +23,7 @@ lib.dialog('/', [
     function (session, args) {
         // Retrieve deliveryDate, continue to details
         session.dialogData.deliveryDate = args.deliveryDate;
-        session.send('Great choice "%s"! Delivery on %s', session.dialogData.selection.name, session.dialogData.deliveryDate.toLocaleDateString());
+        session.send('confirm_choice', session.dialogData.selection.name, session.dialogData.deliveryDate.toLocaleDateString());
         session.beginDialog('details:/');
     },
     function (session, args) {
