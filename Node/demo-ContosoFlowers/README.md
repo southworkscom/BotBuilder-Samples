@@ -137,7 +137,7 @@ const EmailRegex = new RegExp(/[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+
 
 const library = new builder.Library('validators');
 
-library.dialog('/email',
+library.dialog('email',
     builder.DialogAction.validatedPrompt(builder.PromptType.text, (response) =>
         EmailRegex.test(response)));
 
@@ -150,7 +150,7 @@ And this is how you can call the validator from your existing code:
 // Waterfall Dialog
 [
     function (session) {
-        session.beginDialog('validators:/email', {
+        session.beginDialog('validators:email', {
             prompt: 'What\'s your email?',
             retryPrompt: 'Something is wrong with that email address. Please try again.'
         });
@@ -345,7 +345,7 @@ library.dialog('/', [
     },
     function (session, args) {
         session.dialogData.recipientLastName = args.response;
-        session.beginDialog('validators:/phonenumber', {
+        session.beginDialog('validators:phonenumber', {
             prompt: 'What\'s the recipient\'s phone number?',
             retryPrompt: 'Oops, that doesn\'t look like a valid number. Try again.',
             maxRetries: Number.MAX_VALUE
@@ -353,7 +353,7 @@ library.dialog('/', [
     },
     function (session, args) {
         session.dialogData.recipientPhoneNumber = args.response;
-        session.beginDialog('validators:/notes', {
+        session.beginDialog('validators:notes', {
             prompt: 'What do you want the note to say? (in 200 characters)',
             retryPrompt: 'Oops, the note is max 200 characters. Try again.',
             maxRetries: Number.MAX_VALUE
@@ -399,7 +399,7 @@ switch (option) {
             promptMessage = 'This is your current email: ' + session.userData.sender.email + '.\n\nType a new email if you need to update, or use (B)ack to return to the menu.';
         }
         session.send(promptMessage);
-        return session.beginDialog('/email');
+        return session.beginDialog('email');
 
     case SettingChoice.Phone:
         var promptMessage = 'Type your phone number or use (B)ack to return to the menu.';
@@ -407,7 +407,7 @@ switch (option) {
             promptMessage = 'This is your current phone number: ' + session.userData.sender.phoneNumber + '.\n\nType a new number if you need to update, or use (B)ack to return to the menu.';
         }
         session.send(promptMessage);
-        return session.beginDialog('/phone');
+        return session.beginDialog('phone');
     // ...
 }
 ````
@@ -433,7 +433,7 @@ library.dialog('/', [
     function (session, args) {
         // Retrieve selection, continue to delivery date
         session.dialogData.selection = args.selection;
-        session.beginDialog('delivery:/date');
+        session.beginDialog('delivery:date');
     },
     //...
     function (session, args) {
