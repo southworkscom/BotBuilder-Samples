@@ -26,7 +26,7 @@ server.post('/api/messages', connector.listen());
 
 In Contoso Flowers, we are wrapping the Connector's `listen()` method in order to capture the web application's url. We'll use this url later to create a link to the ckeckout form.
 
-Checkout [bot/index.js](bot/index.js#L108-L118) to see how to capture the url and [app.js](app.js#L23-L25) register the hook.
+Checkout [bot/index.js](bot/index.js#L108-L118) to see how to capture the url and [app.js](app.js#L23-L25) to see how to register the hook.
 
 ````JavaScript
 // /bot/index.js
