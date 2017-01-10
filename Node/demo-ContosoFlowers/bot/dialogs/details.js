@@ -6,25 +6,25 @@ const lib = new builder.Library('details');
 // Recipient & Sender details
 lib.dialog('/', [
     function (session) {
-        builder.Prompts.text(session, 'What\'s the recipient\'s first name?');
+        builder.Prompts.text(session, 'ask_recipient_first_name');
     },
     function (session, args) {
         session.dialogData.recipientFirstName = args.response;
-        builder.Prompts.text(session, 'What\'s the recipient\'s last name?');
+        builder.Prompts.text(session, 'ask_recipient_last_name');
     },
     function (session, args) {
         session.dialogData.recipientLastName = args.response;
         session.beginDialog('validators:phonenumber', {
-            prompt: 'What\'s the recipient\'s phone number?',
-            retryPrompt: 'Oops, that doesn\'t look like a valid number. Try again.',
+            prompt: session.gettext('ask_recipient_phone_number'),
+            retryPrompt: session.gettext('invalid_phone_number'),
             maxRetries: Number.MAX_VALUE
         });
     },
     function (session, args) {
         session.dialogData.recipientPhoneNumber = args.response;
         session.beginDialog('validators:notes', {
-            prompt: 'What do you want the note to say? (in 200 characters)',
-            retryPrompt: 'Oops, the note is max 200 characters. Try again.',
+            prompt: session.gettext('ask_note'),
+            retryPrompt: session.gettext('invalid_note'),
             maxRetries: Number.MAX_VALUE
         });
     },
@@ -49,8 +49,8 @@ lib.dialog('/', [
 
 // Sender details
 const UseSavedInfoChoices = {
-    Yes: 'Yes',
-    No: 'Edit'
+    Yes: 'yes',
+    No: 'edit'
 };
 
 lib.dialog('sender', [
@@ -58,15 +58,18 @@ lib.dialog('sender', [
         var sender = session.userData.sender;
         if (sender) {
             // sender data previously saved
-            var promptMessage = util.format('Would you like to use this email %s and this phone number \'%s\' info?', sender.email, sender.phoneNumber);
-            builder.Prompts.choice(session, promptMessage, [UseSavedInfoChoices.Yes, UseSavedInfoChoices.No]);
+            var promptMessage = session.gettext('use_this_email_and_phone_number', sender.email, sender.phoneNumber);
+            builder.Prompts.choice(session, promptMessage, [
+                session.gettext(UseSavedInfoChoices.Yes),
+                session.gettext(UseSavedInfoChoices.No)
+            ]);
         } else {
             // no data
             next();
         }
     },
     function (session, args, next) {
-        if (args.response && args.response.entity === UseSavedInfoChoices.Yes && session.userData.sender) {
+        if (args.response && args.response.entity === session.gettext(UseSavedInfoChoices.Yes) && session.userData.sender) {
             // Use previously saved data, store it in dialogData
             // Next steps will skip if present
             session.dialogData.useSaved = true;
@@ -80,8 +83,8 @@ lib.dialog('sender', [
             return next();
         }
         session.beginDialog('validators:email', {
-            prompt: 'What\'s your email?',
-            retryPrompt: 'Something is wrong with that email address. Please try again.',
+            prompt: session.gettext('ask_email'),
+            retryPrompt: session.gettext('invalid_email'),
             maxRetries: Number.MAX_VALUE
         });
     },
@@ -91,8 +94,8 @@ lib.dialog('sender', [
         }
         session.dialogData.email = args.response;
         session.beginDialog('validators:phonenumber', {
-            prompt: 'What\'s your phone number?',
-            retryPrompt: 'Oops, that doesn\'t look like a valid number. Try again.',
+            prompt: session.gettext('ask_phone_number'),
+            retryPrompt: session.gettext('invalid_phone_number'),
             maxRetries: Number.MAX_VALUE
         });
     },
@@ -101,7 +104,7 @@ lib.dialog('sender', [
             return next();
         }
         session.dialogData.phoneNumber = args.response;
-        builder.Prompts.confirm(session, 'Would you like to save your info?');
+        builder.Prompts.confirm(session, 'ask_save_info');
     },
     function (session, args) {
         var sender = {
