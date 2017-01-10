@@ -597,7 +597,7 @@ Send text:
 bot.dialog("/", function (session) {
     session.send('welcome_title');              // Will print "Welcome to the Contoso Flowers"
     session.send('welcome_subtitle');           // Will print "These are the flowers you are looking for!"
-}];
+});
 ````
 
 Send a card:
