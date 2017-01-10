@@ -165,6 +165,34 @@ And this is how you can call the validator from your existing code:
 
 > It is worth noting that calling other dialogs within your library don't need to be prefixed with the library's id. It is only when crossing from one library context to another that you need to include the library name prefix on your `session.beginDialog()` calls.
 
+Another example of a reusable library is the [BotBuilder's Location picker control](https://github.com/Microsoft/BotBuilder-Location). Once the module is added to your project dependencies, you can register it with your bot and start using it.
+Checkout the [address dialog](bot/dialogs/address.js#L6-L29) to see its usage within Contoso Flowers.
+
+````JavaScript
+const lib = new builder.Library('address');
+
+// Register BotBuilder-Location dialog
+lib.library(locationDialog.createLibrary(process.env.BING_MAPS_KEY));
+
+// Main request address dialog, invokes BotBuilder-Location
+lib.dialog('/', [
+    function (session, args) {
+        // Use botbuilder-location dialog for address request
+        var options = {
+            prompt: 'What is your address?',
+            useNativeControl: true,
+            reverseGeocode: true,
+            requiredFields:
+                locationDialog.LocationRequiredFields.streetAddress |
+                locationDialog.LocationRequiredFields.locality |
+                locationDialog.LocationRequiredFields.country
+        };
+
+        locationDialog.getLocation(session, options);
+    },
+    // ...
+````
+
 #### Rich Cards 
 
 Many messaging channels provide the ability to attach richer objects. The Bot Framework has the ability to render rich cards as attachments.
@@ -616,6 +644,7 @@ To get more information about how to get started in Bot Builder for Node review 
 * [Adding Dialogs and Memory](https://docs.botframework.com/en-us/node/builder/guides/core-concepts/#adding-dialogs-and-memory)
 * [Collecting Input](https://docs.botframework.com/en-us/node/builder/guides/core-concepts/#collecting-input)
 * [Attachments, Cards and Actions](https://docs.botframework.com/en-us/node/builder/chat-reference/interfaces/_botbuilder_d_.iattachment.html)
+* [Bot Libraries](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.library)
 * [Localization](https://docs.botframework.com/en-us/node/builder/chat/localization/#navtitle)
 * [Custom Channel Capabilities](https://docs.botframework.com/en-us/csharp/builder/sdkreference/channels.html)
 * [LUIS](https://docs.botframework.com/en-us/node/builder/guides/understanding-natural-language/)
