@@ -616,11 +616,11 @@ session.send(new builder.Message(session)
     .addAttachment(welcomeCard));
 ````
 
-Internally, the SDK will call session.preferredLocale() to get the users preferred locale and will then use that in a call to session.localizer.gettext() to map the message ID to its localized text string. There are times where you may need to manually call the localizer.
+Internally, the SDK will call `session.preferredLocale()` to get the users preferred locale and will then use that in a call to `session.localizer.gettext()` to map the message ID to its localized text string. There are times where you may need to manually call the localizer.
 
 ##### Using the SDK to manually localize text
 
-You can also localize content by using [session.gettext](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.session.html#gettext) which returns a localized string using the session's preferred locale. This same method also supports template strings, where placeholders are replaced with the other arguments passed to the method. E.g:
+You can also localize content by using [session.gettext() method](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.session.html#gettext) which returns a localized string using the session's preferred locale. This same method also supports template strings, where placeholders are replaced with the other arguments passed to the method. E.g:
 
 ````JavaScript
 // bot/locale/en/checkout.json
