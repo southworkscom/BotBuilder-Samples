@@ -555,7 +555,7 @@ If you want to be able to take advantage of special features or concepts for a c
 
 One of the key problems in human-computer interactions is the ability of the computer to understand what a person wants, and to find the pieces of information that are relevant to their intent. In the LUIS application, you will bundle together the intents and entities that are important to your task.
 
-> You can also see a full sample bot using Luis(Dialog to integrate with a LUIS.ai application in the [LUIS Bot Sample](../intelligence-LUIS).
+> You can also see a full sample bot using Luis Dialog to integrate with a LUIS.ai application in the [LUIS Bot Sample](../intelligence-LUIS).
 
 #### Localization
 
