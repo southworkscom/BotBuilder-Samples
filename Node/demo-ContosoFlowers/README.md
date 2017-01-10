@@ -193,6 +193,10 @@ lib.dialog('/', [
     // ...
 ````
 
+| Emulator | Facebook | Skype |
+|----------|-------|----------|
+|![Bing Location Control](images/bing-location-emulator.png)|![Bing Location Control](images/bing-location-facebook.png)|![Bing Location Control](images/bing-location-skype.png)|
+
 #### Rich Cards 
 
 Many messaging channels provide the ability to attach richer objects. The Bot Framework has the ability to render rich cards as attachments.
