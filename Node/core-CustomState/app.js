@@ -1,3 +1,6 @@
+// This loads the environment variables from the .env file
+require('dotenv-extended').load();
+
 var builder = require('botbuilder');
 var azure = require('botbuilder-azure');
 var restify = require('restify');
@@ -8,12 +11,11 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 
+// Create connector and listen for messages
 var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
-
-// Listen for messages
 server.post('/api/messages', connector.listen());
 
 var HelpMessage = '\n * If you want to know which city I\'m using for my searches type \'current city\'. \n * Want to change the current city? Type \'change city to cityName\'. \n * Want to change it just for your searches? Type \'change my city to cityName\'';
@@ -35,16 +37,15 @@ var bot = new builder.UniversalBot(connector, function (session) {
     session.beginDialog('search');
 });
 
-// Set custom State Store
-var documentDbOptions = {
-    host: 'https://localhost:8081', // Host for local DocDb emulator
-    masterKey: 'C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==', // Fixed key for local DocDb emulator
-    database: 'botdocdb',
-    collection: 'botdata'
-};
-var documentDbClient = new azure.DocumentDbClient(documentDbOptions);
-var azureStorage = new azure.AzureBotStorage({ gzipData: false }, documentDbClient);
-bot.set('storage', azureStorage);
+// Custom State Store
+var docDbClient = new azure.DocumentDbClient({
+    host: process.env.DOCUMENT_DB_HOST,
+    masterKey: process.env.DOCUMENT_DB_MASTER_KEY,
+    database: process.env.DOCUMENT_DB_DATABASE,
+    collection: process.env.DOCUMENT_DB_COLLECTION
+});
+var botStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
+bot.set('storage', botStorage);
 
 // Enable Conversation Data persistence
 bot.set('persistConversationData', true);
