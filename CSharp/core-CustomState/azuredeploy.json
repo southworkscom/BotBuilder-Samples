@@ -39,12 +39,18 @@
     },
     "Project": {
       "type": "string",
-      "defaultValue": "CSharp/core-State"
+      "defaultValue": "CSharp/core-CustomState"
     },
     "MicrosoftAppId": {
       "type": "string"
     },
     "MicrosoftAppPassword": {
+      "type": "string"
+    },
+    "DocumentDbServiceEndpoint": {
+      "type": "string"
+    },
+    "DocumentDbAuthKey": {
       "type": "string"
     }
   },
@@ -97,6 +103,14 @@
               {
                 "name": "MicrosoftAppPassword",
                 "value": "[parameters('MicrosoftAppPassword')]"
+              },
+              {
+                "name": "DocumentDbServiceEndpoint",
+                "value": "[parameters('DocumentDbServiceEndpoint')]"
+              },
+              {
+                "name": "DocumentDbAuthKey",
+                "value": "[parameters('DocumentDbAuthKey')]"
               }
             ]
           }
