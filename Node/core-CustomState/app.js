@@ -37,7 +37,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
     session.beginDialog('search');
 });
 
-// Custom State Store
+// Azure DocumentDb State Store
 var docDbClient = new azure.DocumentDbClient({
     host: process.env.DOCUMENT_DB_HOST,
     masterKey: process.env.DOCUMENT_DB_MASTER_KEY,
@@ -45,6 +45,8 @@ var docDbClient = new azure.DocumentDbClient({
     collection: process.env.DOCUMENT_DB_COLLECTION
 });
 var botStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
+
+// Set Custom Store
 bot.set('storage', botStorage);
 
 // Enable Conversation Data persistence
