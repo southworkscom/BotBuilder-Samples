@@ -1,115 +1,79 @@
-# State API Bot Sample
+# Custom State API Bot Sample
 
 A stateless sample bot tracking context of a conversation.
 
-[![Deploy to Azure][Deploy Button]][Deploy CSharp/State]
+[![Deploy to Azure][Deploy Button]][Deploy CSharp/CustomState]
 [Deploy Button]: https://azuredeploy.net/deploybutton.png
-[Deploy CSharp/State]: https://azuredeploy.net
+[Deploy CSharp/CustomState]: https://azuredeploy.net
 
 ### Prerequisites
 
 The minimum prerequisites to run this sample are:
 * The latest update of Visual Studio 2015. You can download the community version [here](http://www.visualstudio.com) for free.
 * The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://emulator.botframework.com/). Please refer to [this documentation article](https://github.com/microsoft/botframework-emulator/wiki/Getting-Started) to know more about the Bot Framework Emulator.
+* The Azure DocumentDB Emulator. To install the Azure DocumentDB Emulator, download it from [here](https://aka.ms/documentdb-emulator). Please refer to [this documentation article](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-nosql-local-emulator) to know more about the Azure DocumentDB Emulator.
 
 ### Code Highlights
 
 The Bot Framework provides several ways of persisting data relative to a user or conversation. Behind the scenes the Bot Framework uses the Bot State Service for tracking context of a conversation. This allows the creation of stateless Bot web services so that they can be scaled.
 
-The `IDialogContext` has several properties which are useful for tracking state.
+There might be times when a custom storage want to be used. Reasons for wanting this could be many, however the most common ones are:
 
-Property| Use cases
------------- | ------------- 
-ConversationData | Remembering context data associated with a conversation.
-PrivateConversationData | Remembering context data associated with a user in a conversation.
-UserData | Remembering context data associated with a user (across all channels and conversations).
+* **Geographic Affinity**. Users can create their storage service (e.g. Azure Tables or DocDB databases) in regions geographically close to their other services, minimizing latencies and improving user experience
+* **Geo-replication & Redundancy**: Different storage services might provide varying degrees of redundancy, high availability, disaster recovery and geographic replication, which users might prefer (e.g. Azure Table and DocDB)
+* **Data ownership / Compliance**: Company policies and regulations may require the data to be in an account owned by the company
+* **Leveraging data**: Users may benefit from having their own data available for querying or feeding into other processes such as analytics, etc.
 
-Check out the use of `context.ConversationData` in the [`StartAsync`](StateDialog.cs#L19-L23) method to store a default search city. ConversationData is shared for all users within a conversation.
+This bot is based off the [StateDialog bot](../core-State), but it uses a custom storage for tracking the context of a conversation. In this case, we are storing the bot state in DocumentDB by using the [`DocumentDbBotDataStore`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/DocumentDbBotDataStore.cs) provided in the [BotBuilder SDK Azure Extensions](https://github.com/Microsoft/BotBuilder-Azure) repository.
+
+Check out the creation and registration in the Autofac container of the [`DocumentDbBotDataStore`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/DocumentDbBotDataStore.cs) in the [`Global.asax`](/Global.asax.cs#L24-L28) . By default the `DocumentDbBotDataStore' will be created using the endpoint and auth key of the Azure DocumentDB Emulator. These settings are stored in the [`Web.config`](/Web.config#L12-L13) and can be edited to use your DocDb database.
+
+Also, checkout the registration of the [`AzureModule`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/AzureModule.cs), used to bundle up a set of required components
 
 ````C#
-public async Task StartAsync(IDialogContext context)
+protected void Application_Start()
 {
-    string defaultCity;
+    Uri docDbServiceEndpoint = new Uri(ConfigurationManager.AppSettings["DocumentDbServiceEndpoint"]);
+    string docDbEmulatorKey = ConfigurationManager.AppSettings["DocumentDbAuthKey"];
 
-    if (!context.ConversationData.TryGetValue(ContextConstants.CityKey, out defaultCity))
-    {
-        defaultCity = "Seattle";
-        context.ConversationData.SetValue(ContextConstants.CityKey, defaultCity);
-    }
+    var builder = new ContainerBuilder();
 
-    await context.PostAsync($"Welcome to the Search City bot. I'm currently configured to search for things in {defaultCity}");
-    context.Wait(this.MessageReceivedAsync);
-}
-````
+    builder.RegisterModule(new AzureModule(Assembly.GetExecutingAssembly()));
 
-Also, check out the use of `context.PrivateConversationData` in the [`MessageReceivedAsync`](StateDialog.cs#L52-L63) method where logic is included to override data stored in the `ConversationData` property. PrivateConversationData is private to a specific user within a conversation.
+    var store = new DocumentDbBotDataStore(docDbServiceEndpoint, docDbEmulatorKey);
+    builder.Register(c => store)
+        .Keyed<IBotDataStore<BotData>>(AzureModule.Key_DataStore)
+        .AsSelf()
+        .SingleInstance();
 
-````C#
-    string userCity;
+    builder.Update(Conversation.Container);
 
-    var city = context.ConversationData.Get<string>(ContextConstants.CityKey);
-
-    if (context.PrivateConversationData.TryGetValue(ContextConstants.CityKey, out userCity))
-    {
-        await context.PostAsync($"{userName}, you have overridden the city. Your searches are for things in  {userCity}. The default conversation city is {city}.");
-    }
-    else
-    {
-        await context.PostAsync($"Hey {userName}, I'm currently configured to search for things in {city}.");
-    }
-````
-
-In contrast, check out the use of `context.UserData` in the [`ResumeAfterPrompt`](StateDialog.cs#L104) method to remember the user's name. UserData is shared across all channels and conversations for this user.
-
-````C#
-private async Task ResumeAfterPrompt(IDialogContext context, IAwaitable<string> result)
-{
-    try
-    {
-        var userName = await result;
-        this.userWelcomed = true;
-
-        await context.PostAsync($"Welcome {userName}! {HelpMessage}");
-
-        context.UserData.SetValue(ContextConstants.UserNameKey, userName);
-    }
-    catch (TooManyAttemptsException)
-    {
-    }
-
-    context.Wait(this.MessageReceivedAsync);
-}
-````
-
-Additionally, Dialog State is automatically persisted with each message to ensure it is properly maintained between each turn of the conversation and it follows the same privacy rules as `PrivateConversationData`. Sub-dialogs have their own private state and does not need to worry about interfering with the parent dialog.
-Check out the use of the `userWelcomed` variable in the [`StateDialog`](StateDialog.cs#L104) class to keep track if the welcome message was already sent to the user.
-
-````C#
-if (!this.userWelcomed)
-{
-    this.userWelcomed = true;
-    await context.PostAsync($"Welcome back {userName}! Remember the rules: {HelpMessage}");
-
-    context.Wait(this.MessageReceivedAsync);
-    return;
+    GlobalConfiguration.Configure(WebApiConfig.Register);
 }
 ````
 
 ### Outcome
 
-The first time you run this sample it will display a welcome message and configure itself to issue search queries for the 'Seattle' city, storing this value in the ConversationData bag. It will also prompt you for your name and store it in the UserData bag and display a help message. Issuing the `change my city` command will allow you to change the search city for this conversation only and just for your user, storing the value in the PrivateConversationData bag.
+The sample itself will behave exactly the same than the [StateDialog bot](../core-State) with the difference that the bot state is being stored in DocumentDB.
 
-![Sample Outcome](images/outcome-1.png)
+After running the sample, go to the [Azure DocumentDB Emulator Data Explorer](https://localhost:8081/_explorer/index.html#) to check the documents that were stored in DocumentDB. Different Documents are created depending on the bot store type being used. 
 
-Subsequently, you can start a new conversation (In the Bot Framework Emulator this can be done by using the 'New Conversation' option under the Settings menu) and this time the bot will remember you name but will forget the city override we executed in the previous conversation. Using the `change city` command this can be changed for all the users in the conversation.
+The samples uses the three bot store types (UserData, ConversationData and PrivateConversationData), so three documents will appear in the DocumentDB collection.
 
-![Sample Outcome](images/outcome-2.png)
+![Sample Outcome](images/outcome.png)
+
+Each of the documents contains the information related to the bot store type
+
+| UserData| ConversationData | PrivateConversationData |
+|----------|-------|----------|
+|![Custom State - User Data](images/outcome-userdata.png)|![Custom State - Conversation Data](images/outcome-conversationdata.png)|![Custom State - Private Conversation Data](images/outcome-privateconversationdata.png)|
 
 ### More Information
 
-To get more information about how to get started in Bot Builder for .NET and Conversations please review the following resources:
+To get more information about how to get started in Bot Builder for .NET and State please review the following resources:
 * [Bot Builder for .NET](https://docs.botframework.com/en-us/csharp/builder/sdkreference/index.html)
+* [Bot Builder SDK Azure Extensions](https://github.com/Microsoft/BotBuilder-Azure)
 * [Saving User State Data](https://docs.botframework.com/en-us/core-concepts/userdata)
 * [Bot State Service](https://docs.botframework.com/en-us/csharp/builder/sdkreference/stateapi.html)
-* [Dialogs - Echo Bot with State](https://docs.botframework.com/en-us/csharp/builder/sdkreference/dialogs.html#echoBot)
+* [State sample](../core-State)
 * [IDialogContext Interface](https://docs.botframework.com/en-us/csharp/builder/sdkreference/d1/dc6/interface_microsoft_1_1_bot_1_1_builder_1_1_dialogs_1_1_i_dialog_context.html)
