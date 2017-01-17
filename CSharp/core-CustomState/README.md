@@ -19,14 +19,14 @@ The Bot Framework provides several ways of persisting data relative to a user or
 
 There might be times when a custom storage wants to be used. Reasons for wanting this could be many, however the most common ones are:
 
-* **Geographic Affinity**: Users can create their storage service (e.g. Azure Tables or DocDB databases) in regions geographically close to their other services, minimizing latencies and improving user experience
-* **Geo-replication & Redundancy**: Different storage services might provide varying degrees of redundancy, high availability, disaster recovery and geographic replication, which users might prefer (e.g. Azure Table and DocumentDB)
+* **Geographic Affinity**: Users can create their storage service (e.g. Azure Tables or Azure DocumentDB) in regions geographically close to their other services, minimizing latencies and improving user experience
+* **Geo-replication & Redundancy**: Different storage services might provide varying degrees of redundancy, high availability, disaster recovery and geographic replication, which users might prefer (e.g. Azure Tables and Azure DocumentDB)
 * **Data ownership / Compliance**: Company policies and regulations may require the data to be in an account owned by the company
 * **Leveraging data**: Users may benefit from having their own data available for querying or feeding into other processes such as analytics, etc.
 
 This bot is based on the [State bot](../core-State), with the addition that it uses a custom storage for tracking the context of a conversation. In this case, we are storing the bot state in DocumentDB by using the [`DocumentDbBotDataStore`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/DocumentDbBotDataStore.cs) provided in the [BotBuilder SDK Azure Extensions](https://www.nuget.org/packages/Microsoft.Bot.Builder.Azure/) NuGet package.
 
-Check out the creation and registration in the Autofac container of the [`DocumentDbBotDataStore`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/DocumentDbBotDataStore.cs) in the [`Global.asax.cs`](Global.asax.cs#L24-L28). By default the `DocumentDbBotDataStore` will be created using the endpoint and auth key of the Azure DocumentDB Emulator. These settings are stored in the [`Web.config`](Web.config#L12-L13) and can be edited to use your DocDb database.
+Check out the creation and registration in the Autofac container of the [`DocumentDbBotDataStore`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/DocumentDbBotDataStore.cs) in the [`Global.asax.cs`](Global.asax.cs#L24-L28). By default the `DocumentDbBotDataStore` will be created using the endpoint and auth key of the Azure DocumentDB Emulator. These settings are stored in the [`Web.config`](Web.config#L12-L13) and can be edited to use your DocumentDB database.
 
 Also, checkout the registration of the [`AzureModule`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/AzureModule.cs), used to bundle up a set of required components
 
