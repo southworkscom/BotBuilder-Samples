@@ -62,7 +62,7 @@ The samples uses the three bot store types (UserData, ConversationData and Priva
 
 ![Sample Outcome](images/outcome.png)
 
-Each of the documents contains the information related to the bot store type
+Each of the documents contains the information related to the bot store type:
 
 | UserData| ConversationData | PrivateConversationData |
 |----------|-------|----------|
