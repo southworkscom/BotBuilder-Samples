@@ -20,8 +20,8 @@ The Bot Framework provides several ways of persisting data relative to a user or
 
 There might be times when a custom storage wants to be used. Reasons for wanting this could be many, however the most common ones are:
 
-* **Geographic Affinity**: Users can create their storage service (e.g. Azure Tables or DocDB databases) in regions geographically close to their other services, minimizing latencies and improving user experience
-* **Geo-replication & Redundancy**: Different storage services might provide varying degrees of redundancy, high availability, disaster recovery and geographic replication, which users might prefer (e.g. Azure Table and DocumentDB)
+* **Geographic Affinity**: Users can create their storage service (e.g. Azure Tables or Azure DocumentDB) in regions geographically close to their other services, minimizing latencies and improving user experience
+* **Geo-replication & Redundancy**: Different storage services might provide varying degrees of redundancy, high availability, disaster recovery and geographic replication, which users might prefer (e.g. Azure Table and Azure DocumentDB)
 * **Data ownership / Compliance**: Company policies and regulations may require the data to be in an account owned by the company
 * **Leveraging data**: Users may benefit from having their own data available for querying or feeding into other processes such as analytics, etc.
 
