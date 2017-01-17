@@ -1,6 +1,6 @@
 # Custom State API Bot Sample
 
-A stateless sample bot tracking context of a conversation.
+A stateless sample bot tracking context of a conversation using a custom storage provider.
 
 [![Deploy to Azure][Deploy Button]][Deploy CSharp/CustomState]
 [Deploy Button]: https://azuredeploy.net/deploybutton.png
@@ -17,16 +17,16 @@ The minimum prerequisites to run this sample are:
 
 The Bot Framework provides several ways of persisting data relative to a user or conversation. Behind the scenes the Bot Framework uses the Bot State Service for tracking context of a conversation. This allows the creation of stateless Bot web services so that they can be scaled.
 
-There might be times when a custom storage want to be used. Reasons for wanting this could be many, however the most common ones are:
+There might be times when a custom storage wants to be used. Reasons for wanting this could be many, however the most common ones are:
 
-* **Geographic Affinity**. Users can create their storage service (e.g. Azure Tables or DocDB databases) in regions geographically close to their other services, minimizing latencies and improving user experience
-* **Geo-replication & Redundancy**: Different storage services might provide varying degrees of redundancy, high availability, disaster recovery and geographic replication, which users might prefer (e.g. Azure Table and DocDB)
+* **Geographic Affinity**: Users can create their storage service (e.g. Azure Tables or DocDB databases) in regions geographically close to their other services, minimizing latencies and improving user experience
+* **Geo-replication & Redundancy**: Different storage services might provide varying degrees of redundancy, high availability, disaster recovery and geographic replication, which users might prefer (e.g. Azure Table and DocumentDB)
 * **Data ownership / Compliance**: Company policies and regulations may require the data to be in an account owned by the company
 * **Leveraging data**: Users may benefit from having their own data available for querying or feeding into other processes such as analytics, etc.
 
-This bot is based off the [StateDialog bot](../core-State), but it uses a custom storage for tracking the context of a conversation. In this case, we are storing the bot state in DocumentDB by using the [`DocumentDbBotDataStore`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/DocumentDbBotDataStore.cs) provided in the [BotBuilder SDK Azure Extensions](https://github.com/Microsoft/BotBuilder-Azure) repository.
+This bot is based on the [State bot](../core-State), with the addition that it uses a custom storage for tracking the context of a conversation. In this case, we are storing the bot state in DocumentDB by using the [`DocumentDbBotDataStore`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/DocumentDbBotDataStore.cs) provided in the [BotBuilder SDK Azure Extensions](https://github.com/Microsoft/BotBuilder-Azure) repository.
 
-Check out the creation and registration in the Autofac container of the [`DocumentDbBotDataStore`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/DocumentDbBotDataStore.cs) in the [`Global.asax`](/Global.asax.cs#L24-L28) . By default the `DocumentDbBotDataStore' will be created using the endpoint and auth key of the Azure DocumentDB Emulator. These settings are stored in the [`Web.config`](/Web.config#L12-L13) and can be edited to use your DocDb database.
+Check out the creation and registration in the Autofac container of the [`DocumentDbBotDataStore`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/DocumentDbBotDataStore.cs) in the [`Global.asax.cs`](Global.asax.cs#L24-L28). By default the `DocumentDbBotDataStore` will be created using the endpoint and auth key of the Azure DocumentDB Emulator. These settings are stored in the [`Web.config`](Web.config#L12-L13) and can be edited to use your DocDb database.
 
 Also, checkout the registration of the [`AzureModule`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/CSharp/Library/Microsoft.Bot.Builder.Azure/AzureModule.cs), used to bundle up a set of required components
 
@@ -54,7 +54,7 @@ protected void Application_Start()
 
 ### Outcome
 
-The sample itself will behave exactly the same than the [StateDialog bot](../core-State) with the difference that the bot state is being stored in DocumentDB.
+The sample itself will behave exactly as the [State bot](../core-State) with the difference that the bot state is being stored in DocumentDB.
 
 After running the sample, go to the [Azure DocumentDB Emulator Data Explorer](https://localhost:8081/_explorer/index.html#) to check the documents that were stored in DocumentDB. Different Documents are created depending on the bot store type being used. 
 
