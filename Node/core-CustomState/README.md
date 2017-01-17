@@ -25,7 +25,7 @@ There might be times when a custom storage wants to be used. Reasons for wanting
 * **Data ownership / Compliance**: Company policies and regulations may require the data to be in an account owned by the company
 * **Leveraging data**: Users may benefit from having their own data available for querying or feeding into other processes such as analytics, etc.
 
-This bot is based on the [State bot](../core-State), with the addition that it uses a custom storage for tracking the context of a conversation. In this case, we are storing the bot state in DocumentDB by using the [`AzureBotStorage`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/Node/src/AzureBotStorage.ts) along with a [`DocumentDbClient`]https://github.com/Microsoft/BotBuilder-Azure/blob/master/Node/src/DocumentDbClient.ts(), instance, both provided by the [BotBuilder Azure Extensions for Node.js](https://www.npmjs.com/package/botbuilder-azure) package.
+This bot is based on the [State bot](../core-State), with the addition that it uses a custom storage for tracking the context of a conversation. In this case, we are storing the bot state in DocumentDB by using the [`AzureBotStorage`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/Node/src/AzureBotStorage.ts) along with a [`DocumentDbClient`](https://github.com/Microsoft/BotBuilder-Azure/blob/master/Node/src/DocumentDbClient.ts) instance, both provided by the [BotBuilder Azure Extensions for Node.js](https://www.npmjs.com/package/botbuilder-azure) package.
 
 Check out the creation of the `AzureBotStorage` and `DocumentDbClient` instances in the [app.js](./app.js#L40-L48). Also, see [how to configure the bot](./app.js#L50) to use this new custom storage:
 
