@@ -15,7 +15,7 @@ The minimum prerequisites to run this sample are:
 ### Code Highlights
 
 Many messaging channels provide the ability to attach richer objects. To pass a simple media attachment (image/audio/video/file) to an activity you add a simple attachment data structure with a link to the content, setting the ContentType, ContentUrl and Name properties.
-The Attachments property is an array of Attachment objects which allow you to send and receive images and other content. Check out the key code located in the [SendAttachmentDialog](SendAttachmentDialog.cs#L57-L84) class where the `replyMessage.Attachments` property of the message activity is populated with an image attachment.
+The Attachments property is an array of Attachment objects which allow you to send and receive images and other content. Check out the key code located in the [SendAttachmentDialog](SendAttachmentDialog.cs#L55-L82) class where the `replyMessage.Attachments` property of the message activity is populated with an image attachment.
 
 ````C#
 public async Task ProcessSelectedOptionAsync(IDialogContext context, IAwaitable<string> argument)
@@ -62,7 +62,7 @@ You'll need to encode file's content, then set the attachment's `contentUrl` as 
 data:image/png;base64,iVBORw0KGgo…
 ````
 
-Checkout [GetInlineAttachment](SendAttachmentDialog.cs#L86-L98) to see how to convert a file read from filesystem and return the attachment instance to add to the attachments collection in the key method shown above (`ProcessSelectedOptionAsync`).
+Checkout [GetInlineAttachment](SendAttachmentDialog.cs#L84-L96) to see how to convert a file read from filesystem and return the attachment instance to add to the attachments collection in the key method shown above (`ProcessSelectedOptionAsync`).
 
 ````C#
 private static Attachment GetInlineAttachment()
@@ -84,15 +84,15 @@ private static Attachment GetInlineAttachment()
 
 This option should be used when the file to send is less than 256Kb in size when encoded to base64. A good scenario are images generated based on user input.
 
-Checkout [GetUploadedAttachmentAsync](SendAttachmentDialog.cs#L100-L129) to see how to get the required information to create the attachment instance to add to the attachments collection in the key method shown above (`ProcessSelectedOptionAsync`).
+Checkout [GetUploadedAttachmentAsync](SendAttachmentDialog.cs#L108-L127) to see how to get the required information to create the attachment instance to add to the attachments collection in the key method shown above (`ProcessSelectedOptionAsync`).
 
 It does require a few more steps than the other methods, but leverages the channels store to store the file:
 
-1. Get an instance to the Connector API which will handle communication with channel storage ([relevant code](SendAttachmentDialog.cs#L104))
-2. Create a new attachments set providing the Connector API instance as argument ([relevant code](SendAttachmentDialog.cs#L106))
-3. Read (or generate) the content file and store it in a Byte array to use it as argument within the AttachmentData members ([relevant code](SendAttachmentDialog.cs#L112))
-4. Perform the attachment upload to the channel ([relevant code](SendAttachmentDialog.cs#L107))
-5. Get the attachment Uri (using the uploaded Id) where the channel stored the uploaded image ([relevant code](SendAttachmentDialog.cs#L116))
+1. Get an instance to the Connector API which will handle communication with channel storage ([relevant code](SendAttachmentDialog.cs#L102))
+2. Create a new attachment set providing the Connector API instance as argument ([relevant code](SendAttachmentDialog.cs#L104))
+3. Read (or generate) the content file and store it in a Byte array to use it as argument within the AttachmentData members ([relevant code](SendAttachmentDialog.cs#L110))
+4. Perform the attachment upload to the channel ([relevant code](SendAttachmentDialog.cs#L105))
+5. Get the attachment Uri (using the uploaded Id) where the channel stored the uploaded image ([relevant code](SendAttachmentDialog.cs#L114))
 
 ````C#
 private static async Task<Attachment> GetUploadedAttachmentAsync(string serviceUrl, string conversationId)
@@ -132,7 +132,7 @@ private static async Task<Attachment> GetUploadedAttachmentAsync(string serviceU
 This option is the simplest but requires the image to be already on the Internet and be publicly accesible.
 You could also provide an Url pointing to your own site.
 
-Checkout [GetInternetAttachment](SendAttachmentDialog.cs#L131-L139) to see how to get the required information to create the attachment instance to add to the attachments collection in the key method shown above (`ProcessSelectedOptionAsync`).
+Checkout [GetInternetAttachment](SendAttachmentDialog.cs#L129-L137) to see how to get the required information to create the attachment instance to add to the attachments collection in the key method shown above (`ProcessSelectedOptionAsync`).
 
 ````C#
 private static Attachment GetInternetAttachment()
