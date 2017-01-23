@@ -36,10 +36,10 @@
 
             await context.PostAsync(welcomeMessage);
 
-            await this.DisplayOptionsAsync(context, null);
+            await this.DisplayOptionsAsync(context);
         }
 
-        public Task DisplayOptionsAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
+        public async Task DisplayOptionsAsync(IDialogContext context)
         {
             PromptDialog.Choice<string>(
                 context,
@@ -50,8 +50,6 @@
                 3,
                 PromptStyle.PerLine,
                 this.options.Values);
-
-            return Task.CompletedTask;
         }
 
         public async Task ProcessSelectedOptionAsync(IDialogContext context, IAwaitable<string> argument)
@@ -80,7 +78,7 @@
 
             await context.PostAsync(replyMessage);
 
-            await this.DisplayOptionsAsync(context, null);
+            await this.DisplayOptionsAsync(context);
         }
 
         private static Attachment GetInlineAttachment()
