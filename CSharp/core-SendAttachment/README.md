@@ -84,7 +84,7 @@ private static Attachment GetInlineAttachment()
 
 This option should be used when the file to send is less than 256Kb in size when encoded to base64. A good scenario are images generated based on user input.
 
-Checkout [GetUploadedAttachmentAsync](SendAttachmentDialog.cs#L108-L127) to see how to get the required information to create the attachment instance to add to the attachments collection in the key method shown above (`ProcessSelectedOptionAsync`).
+Checkout [GetUploadedAttachmentAsync](SendAttachmentDialog.cs#L98-L127) to see how to get the required information to create the attachment instance to add to the attachments collection in the key method shown above (`ProcessSelectedOptionAsync`).
 
 It does require a few more steps than the other methods, but leverages the channels store to store the file:
 
