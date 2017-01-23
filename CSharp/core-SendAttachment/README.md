@@ -148,15 +148,15 @@ private static Attachment GetInternetAttachment()
 
 ### Outcome
 
-You will see the following in the Bot Framework Emulator when opening and running the sample solution.
+You will see the following in the Bot Framework Emulator when selecting the inline attachment. See how the image is encoded in the `contentUrl` of the attachment.
 
 ![Sample Outcome](images/outcome-emulator.png)
 
-You will see the following in your Facebook Messenger.
+You will see the following in your Facebook Messenger when selecting to upload the attachment.
 
 ![Sample Outcome](images/outcome-facebook.png)
 
-On the other hand, you will see the following in Skype.
+On the other hand, you will see the following in Skype when selecting an Internet attachment.
 
 ![Sample Outcome](images/outcome-skype.png)
 
