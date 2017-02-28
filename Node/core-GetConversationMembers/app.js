@@ -76,7 +76,7 @@ bot.on('conversationUpdate', function (message) {
 
 // Helper methods
 
-// Inject the conenctor's JWT token into to the Swagger client
+// Inject the connector's JWT token into to the Swagger client
 function addTokenToClient(connector, clientPromise) {
     // ask the connector for the token. If it expired, a new token will be requested to the API
     var obtainToken = Promise.promisify(connector.getAccessToken.bind(connector));
