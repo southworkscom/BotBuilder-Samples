@@ -42,13 +42,12 @@ var bot = new builder.UniversalBot(connector, function (session) {
         var serviceHost = url.parse(message.address.serviceUrl).host;
         client.setHost(serviceHost);
         // 3. GET /v3/conversations/{conversationId}/members
-        client.Conversations.Conversations_GetConversationMembers({ conversationId: conversationId })
+        return client.Conversations.Conversations_GetConversationMembers({ conversationId: conversationId })
             .then(function (res) {
                 printMembersInChannel(message.address, res.obj);
-            })
-            .catch(function (error) {
-                console.log('Error retrieving conversation members: ' + error.statusText);
             });
+    }).catch(function (error) {
+        console.log('Error retrieving conversation members', error);
     });
 });
 
