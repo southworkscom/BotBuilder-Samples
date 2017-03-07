@@ -28,77 +28,80 @@
             
             var conversation = await directLineClient.Conversations.StartConversationAsync();
 
-            await Task.WhenAll(Receive(directLineClient, conversation.StreamUrl), Send(directLineClient, conversation.ConversationId));
-        }
+            var webSocketClient = new ClientWebSocket();
 
-        static UTF8Encoding encoder = new UTF8Encoding();
+            await webSocketClient.ConnectAsync(new Uri(conversation.StreamUrl), CancellationToken.None);
 
-        private static async Task Send(DirectLineClient client, string conversationId)
-        {
+            new Thread(async () => await ReadBotMessagesAsync(webSocketClient)).Start();
+
             while (true)
             {
-                string message = Console.ReadLine().Trim();
+                string input = Console.ReadLine().Trim();
 
-                var userMessage = new Activity
+                if (input.ToLower() == "exit")
                 {
-                    From = new ChannelAccount(fromUser),
-                    Text = message,
-                    Type = ActivityTypes.Message
-                };
-                
-                var input = JsonConvert.SerializeObject(userMessage);
-
-                byte[] buffer = encoder.GetBytes(input);
-                await client.Conversations.PostActivityAsync(conversationId, userMessage);
-            }
-        }
-        
-        private static async Task Receive(DirectLineClient client, string streamUrl)
-        {
-            var buffer = new byte[1024 * 4];
-            var webSocket = new ClientWebSocket();
-            await webSocket.ConnectAsync(new Uri(streamUrl), CancellationToken.None);
-            
-            while (true)
-            {
-                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                if (result.Count == 0) break;
-
-                var socketMessage = encoder.GetString(buffer, 0, result.Count);
-                GetMessage(socketMessage);
-            }
-        }
-
-        private static void GetMessage(string socketMessage)
-        {
-            var activitySet = JsonConvert.DeserializeObject<ActivitySet>(socketMessage);
-            var activities = from x in activitySet.Activities
-                             where x.From.Id == botId
-                             select x;
-
-            foreach (Activity activity in activities)
-            {
-                Console.WriteLine(activity.Text);
-
-                if (activity.Attachments != null)
+                    break;
+                }
+                else
                 {
-                    foreach (Attachment attachment in activity.Attachments)
+                    if (input.Length > 0)
                     {
-                        switch (attachment.ContentType)
+                        Activity userMessage = new Activity
                         {
-                            case "application/vnd.microsoft.card.hero":
-                                RenderHeroCard(attachment);
-                                break;
+                            From = new ChannelAccount(fromUser),
+                            Text = input,
+                            Type = ActivityTypes.Message
+                        };
 
-                            case "image/png":
-                                Console.WriteLine($"Opening the requested image '{attachment.ContentUrl}'");
-
-                                Process.Start(attachment.ContentUrl);
-                                break;
-                        }
+                        await directLineClient.Conversations.PostActivityAsync(conversation.ConversationId, userMessage);
                     }
                 }
-                Console.Write("Command> ");
+            }
+
+            await webSocketClient.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+        }
+        
+        private static async Task ReadBotMessagesAsync(ClientWebSocket client)
+        {
+            var buffer = new byte[1024 * 4];
+            var encoder = new UTF8Encoding();
+
+            while (client.State == WebSocketState.Open)
+            {
+                var result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                if (result.Count == 0) continue;
+
+                var socketMessage = encoder.GetString(buffer, 0, result.Count);
+
+                var activitySet = JsonConvert.DeserializeObject<ActivitySet>(socketMessage);
+                var activities = from x in activitySet.Activities
+                                 where x.From.Id == botId
+                                 select x;
+
+                foreach (Activity activity in activities)
+                {
+                    Console.WriteLine(activity.Text);
+
+                    if (activity.Attachments != null)
+                    {
+                        foreach (Attachment attachment in activity.Attachments)
+                        {
+                            switch (attachment.ContentType)
+                            {
+                                case "application/vnd.microsoft.card.hero":
+                                    RenderHeroCard(attachment);
+                                    break;
+
+                                case "image/png":
+                                    Console.WriteLine($"Opening the requested image '{attachment.ContentUrl}'");
+
+                                    Process.Start(attachment.ContentUrl);
+                                    break;
+                            }
+                        }
+                    }
+                    Console.Write("Command> ");
+                }
             }
         }
         
