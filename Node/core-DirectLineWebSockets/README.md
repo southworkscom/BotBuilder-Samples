@@ -1,4 +1,4 @@
-# Direct Line Bot Sample (using client WebSocket)
+# Direct Line Bot Sample (using client WebSockets)
 
 A sample bot and a custom client communicating to each other using the Direct Line API.
 
@@ -27,7 +27,7 @@ Remember to update the environment variables with the `MICROSOFT_APP_ID` and `MI
 
 ### Code Highlights
 
-The Direct Line API is a simple REST API for connecting directly to a single bot. This API is intended for developers writing their own client applications, web chat controls, or mobile apps that will talk to their bot. In this sample, we are using the [Direct Line Swagger file](https://docs.botframework.com/en-us/restapi/directline3/swagger.json) and [Swagger JS](https://github.com/swagger-api/swagger-js) to create a client for Node that will simplify access to the underlying REST API. Check out the client's [app.js](DirectLineClient/app.js#L7-L26) to see the client setup & initialization.
+The Direct Line API is a simple REST API for connecting directly to a single bot. This API is intended for developers writing their own client applications, web chat controls, or mobile apps that will talk to their bot. In this sample, we are using the [Direct Line Swagger file](https://docs.botframework.com/en-us/restapi/directline3/swagger.json) and [Swagger JS](https://github.com/swagger-api/swagger-js) to create a client for Node that will simplify access to the underlying REST API. Check out the client's [app.js](DirectLineClient/app.js#L17-L32) to see the client setup & initialization.
 
 ````JavaScript
 var directLineClient = rp(directLineSpecUrl)
@@ -49,7 +49,7 @@ var directLineClient = rp(directLineSpecUrl)
 ````
 
 Each conversation on the Direct Line channel must be explicitly started using the `client.Conversations.Conversations_StartConversation()` function.
-Check out the client's [app.js createConversation](DirectLineClient/app.js#L35-L51) function which creates a new conversation.
+Check out the client's following [function call](DirectLineClient/app.js#L35-L51) which creates a new conversation.
 
 ````JavaScript
 directLineClient.then(function (client) {
@@ -95,9 +95,9 @@ client.Conversations.Conversations_PostActivity(
 
 Messages from the Bot are being received using the WebSocket protocol (actually WSS). For this, after the conversation was created a `streamUrl` is also returned and it will be the target for the WebSocket connection.
 
-Check out the client's [startReceivingWebSocketClient](DirectLineClient/app.js#L86-L114) and [startReceivingW3CWebSocketClient](DirectLineClient/app.js#L116-L141) functions which creates a WebSocket client hitting the `streamUrl` value returned when the conversation was created. Messages are then filtered from anyone but our own client using the [`printMessages`](DirectLineClient/app.js#L144-L159) function.
+Check out the client's [startReceivingWebSocketClient](DirectLineClient/app.js#L86-L114) and [startReceivingW3CWebSocketClient](DirectLineClient/app.js#L116-L141) functions which create WebSocket clients hitting the `streamUrl` value returned when the conversation was created (one or other will be called dependening on the `w3c` optional flag when running the console app). Messages are then filtered from anyone but our own client using the [`printMessages`](DirectLineClient/app.js#L144-L159) function.
 
-Each of these functions showcase the two ways you can connect to the `streamUrl` using WebSockets (one using a custom Node.js implementation, while the other the W3C one). But if you look closely the are very similar and within the message received event handler the bot response is being parsed to JSON in order to print it.
+Each of these functions showcase the two ways you can connect to the `streamUrl` using WebSockets (first one using a custom Node.js implementation, while the second one uses W3C one). If you look closely they are very similar and within the `on message` event handler the bot's response is being parsed to JSON in order to print it.
 
 For `startReceivingWebSocketClient` we have the following [handler](DirectLineClient/app.js#L103-L110):
 
@@ -125,7 +125,7 @@ ws.onmessage = function(e) {
 };  
 ````
 
-> Note: Clients should keep track of the `watermark` value from each `ActivitySet` so they can use it on reconnect. Note that a null or missing watermark should be ignored and should not overwrite a prior watermark in the client.
+> Clients should keep track of the `watermark` value from each `ActivitySet` so they can use it on reconnect. Note that a null or missing watermark should be ignored and should not overwrite a prior watermark in the client.
 
 DirectLine v3.0 (unlike version 1.1) has supports for Attachments (see [Adding Attachments to a Message](https://docs.botframework.com/en-us/core-concepts/attachments) for more information about attachments).
 
