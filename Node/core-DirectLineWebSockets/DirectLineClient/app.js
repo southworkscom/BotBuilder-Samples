@@ -102,7 +102,7 @@ function startReceivingWebSocketClient(streamUrl, conversationId) {
         });
         connection.on('message', function(message) {
             if (message.type === 'utf8' && message.utf8Data.length > 0) {
-                data = JSON.parse(message.utf8Data);
+                var data = JSON.parse(message.utf8Data);
 
                 //watermark = data.watermark;
                 printMessages(data.activities);

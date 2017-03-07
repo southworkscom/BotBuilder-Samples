@@ -26,7 +26,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
 
     var text = session.message.text.toLocaleLowerCase();
 
-    console.log('Message received: ' + text);
+    console.log('[' + session.message.address.conversation.id + '] Message received: ' + text);
 
     switch (text) {
         case 'show me a hero card':
