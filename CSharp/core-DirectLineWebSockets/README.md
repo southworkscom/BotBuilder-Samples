@@ -1,4 +1,4 @@
-# Direct Line Bot Sample
+# Direct Line Bot Sample (using client WebSockets)
 
 A sample bot and a custom client communicating to each other using the Direct Line API and WebSockets.
 
