@@ -9,7 +9,7 @@ A sample bot and a custom client communicating to each other using the Direct Li
 ### Prerequisites
 
 The minimum prerequisites to run this sample are:
-* The latest update of Visual Studio 2015. You can download the community version [here](http://www.visualstudio.com) for free.
+* The latest update of Visual Studio 2017. You can download the community version [here](http://www.visualstudio.com) for free.
 * The Bot Framework Emulator. To install the Bot Framework Emulator, download it from [here](https://emulator.botframework.com/). Please refer to [this documentation article](https://github.com/microsoft/botframework-emulator/wiki/Getting-Started) to know more about the Bot Framework Emulator.
 * Register your bot with the Microsoft Bot Framework. Please refer to [this](https://docs.botframework.com/en-us/csharp/builder/sdkreference/gettingstarted.html#registering) for the instructions. Once you complete the registration, update the [Bot's Web.config](DirectLineBot/Web.config#L9-L11) file with the registered config values (Bot Id, MicrosoftAppId and MicrosoftAppPassword)
 
@@ -24,7 +24,92 @@ Also, in order to be able to run and test this sample you must [publish your bot
 
 ### Code Highlights
 
-<TBA>
+The Direct Line API is a simple REST API for connecting directly to a single bot. This API is intended for developers writing their own client applications, web chat controls, or mobile apps that will talk to their bot. The [Direct Line v3.0 Nuget package](https://www.nuget.org/packages/Microsoft.Bot.Connector.DirectLine/3.0.0-beta) simplifies access to the underlying REST API.
+
+Each conversation on the Direct Line channel must be explicitly started using the `DirectLineClient.Conversations.StartConversationAsync`.
+Check out the client's [Program.cs](DirectLineClient/Program.cs#L27-L29) class which creates a new `DirectLineClient` and starts a new conversation.
+
+
+````C#
+DirectLineClient client = new DirectLineClient(directLineSecret);
+            
+var conversation = await client.Conversations.StartConversationAsync();
+````
+
+User messages are sent to the Bot using the Direct Line Client `Conversations.PostActivityAsync` method using the `ConversationId` generated in the previous step.
+
+````C#
+while (true)
+{
+    string input = Console.ReadLine().Trim();
+
+    if (input.ToLower() == "exit")
+    {
+        break;
+    }
+    else
+    {
+        if (input.Length > 0)
+        {
+            Activity userMessage = new Activity
+            {
+                From = new ChannelAccount(fromUser),
+                Text = input,
+                Type = ActivityTypes.Message
+            };
+
+            await client.Conversations.PostActivityAsync(conversation.ConversationId, userMessage);
+        }
+    }
+}
+````
+
+Messages from the Bot are being received using WebSocket protocol. For this, after the conversation was created a `streamUrl` is also returned and it will be the target for the WebSocket connection. Check out the client's WebSocket initialization in [Program.cs](DirectLineClient/Program.cs#L31-L34). 
+
+> Note: In this project we use [websocket-sharp](https://github.com/sta/websocket-sharp) to implement the receiver client but as we have the WebSocket URL this functionality can be implemented according to the needs of the solution.
+
+````C#
+using(var webSocketClient = new WebSocket(conversation.StreamUrl))
+{
+    webSocketClient.OnMessage += WebSocketClient_OnMessage;
+    webSocketClient.Connect();
+````
+
+We use the [WebSocketClient_OnMessage](DirectLineClient/Program.cs#L62) method to handle the OnMessage event of the `webSocketClient` witch occurs when the WebSocket receives a message.
+
+````C#
+private static void WebSocketClient_OnMessage(object sender, MessageEventArgs e)
+{
+    var activitySet = JsonConvert.DeserializeObject<ActivitySet>(e.Data);
+    var activities = from x in activitySet.Activities
+        where x.From.Id == botId
+        select x;
+````
+
+DirectLine v3.0 (unlike version 1.1) has support for Attachments (see [Adding Attachments to a Message](https://docs.botframework.com/en-us/core-concepts/attachments) for more information about attachments). Check out the `WebSocketClient_OnMessage` method in [Program.cs](DirectLineClient/Program.cs#L73-L90) to see how the Attachments are retrieved and rendered appropriately based on their type.
+
+
+````C#
+if (activity.Attachments != null)
+{
+    foreach (Attachment attachment in activity.Attachments)
+    {
+        switch (attachment.ContentType)
+        {
+            case "application/vnd.microsoft.card.hero":
+                RenderHeroCard(attachment);
+                break;
+
+            case "image/png":
+                Console.WriteLine($"Opening the requested image '{attachment.ContentUrl}'");
+
+                Process.Start(attachment.ContentUrl);
+                break;
+        }
+    }
+}
+````
+
 
 ### Outcome
 
