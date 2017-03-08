@@ -7,9 +7,9 @@
     using System.Threading.Tasks;
     using Microsoft.Bot.Connector.DirectLine;
     using Newtonsoft.Json;
-    using System.Net.WebSockets;
     using System.Threading;
     using System.Text;
+    using WebSocketSharp;
 
     public class Program
     {
@@ -28,80 +28,67 @@
             
             var conversation = await directLineClient.Conversations.StartConversationAsync();
 
-            var webSocketClient = new ClientWebSocket();
-
-            await webSocketClient.ConnectAsync(new Uri(conversation.StreamUrl), CancellationToken.None);
-
-            new Thread(async () => await ReadBotMessagesAsync(webSocketClient)).Start();
-
-            while (true)
+            using(var webSocketClient = new WebSocket(conversation.StreamUrl))
             {
-                string input = Console.ReadLine().Trim();
+                webSocketClient.OnMessage += WebSocketClient_OnMessage;
+                webSocketClient.Connect();
 
-                if (input.ToLower() == "exit")
+                while (true)
                 {
-                    break;
-                }
-                else
-                {
-                    if (input.Length > 0)
+                    string input = Console.ReadLine().Trim();
+
+                    if (input.ToLower() == "exit")
                     {
-                        Activity userMessage = new Activity
+                        break;
+                    }
+                    else
+                    {
+                        if (input.Length > 0)
                         {
-                            From = new ChannelAccount(fromUser),
-                            Text = input,
-                            Type = ActivityTypes.Message
-                        };
+                            Activity userMessage = new Activity
+                            {
+                                From = new ChannelAccount(fromUser),
+                                Text = input,
+                                Type = ActivityTypes.Message
+                            };
 
-                        await directLineClient.Conversations.PostActivityAsync(conversation.ConversationId, userMessage);
+                            await directLineClient.Conversations.PostActivityAsync(conversation.ConversationId, userMessage);
+                        }
                     }
                 }
             }
-
-            await webSocketClient.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
         }
-        
-        private static async Task ReadBotMessagesAsync(ClientWebSocket client)
+
+        private static void WebSocketClient_OnMessage(object sender, MessageEventArgs e)
         {
-            var buffer = new byte[1024 * 4];
-            var encoder = new UTF8Encoding();
+            var activitySet = JsonConvert.DeserializeObject<ActivitySet>(e.Data);
+            var activities = from x in activitySet.Activities
+                             where x.From.Id == botId
+                             select x;
 
-            while (client.State == WebSocketState.Open)
+            foreach (Activity activity in activities)
             {
-                var result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                if (result.Count == 0) continue;
+                Console.WriteLine(activity.Text);
 
-                var socketMessage = encoder.GetString(buffer, 0, result.Count);
-
-                var activitySet = JsonConvert.DeserializeObject<ActivitySet>(socketMessage);
-                var activities = from x in activitySet.Activities
-                                 where x.From.Id == botId
-                                 select x;
-
-                foreach (Activity activity in activities)
+                if (activity.Attachments != null)
                 {
-                    Console.WriteLine(activity.Text);
-
-                    if (activity.Attachments != null)
+                    foreach (Attachment attachment in activity.Attachments)
                     {
-                        foreach (Attachment attachment in activity.Attachments)
+                        switch (attachment.ContentType)
                         {
-                            switch (attachment.ContentType)
-                            {
-                                case "application/vnd.microsoft.card.hero":
-                                    RenderHeroCard(attachment);
-                                    break;
+                            case "application/vnd.microsoft.card.hero":
+                                RenderHeroCard(attachment);
+                                break;
 
-                                case "image/png":
-                                    Console.WriteLine($"Opening the requested image '{attachment.ContentUrl}'");
+                            case "image/png":
+                                Console.WriteLine($"Opening the requested image '{attachment.ContentUrl}'");
 
-                                    Process.Start(attachment.ContentUrl);
-                                    break;
-                            }
+                                Process.Start(attachment.ContentUrl);
+                                break;
                         }
                     }
-                    Console.Write("Command> ");
                 }
+                Console.Write("Command> ");
             }
         }
         
