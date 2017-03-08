@@ -61,6 +61,12 @@
 
         private static void WebSocketClient_OnMessage(object sender, MessageEventArgs e)
         {
+            // avoid null reference exception when no data received
+            if (string.IsNullOrWhiteSpace(e.Data))
+            {
+                return;
+            }
+
             var activitySet = JsonConvert.DeserializeObject<ActivitySet>(e.Data);
             var activities = from x in activitySet.Activities
                              where x.From.Id == botId
