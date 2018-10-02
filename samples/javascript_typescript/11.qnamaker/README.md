@@ -16,7 +16,7 @@ In this sample, we demonstrate how to use the QnA Maker service to answer questi
     ```
 - Install modules and start the bot
     ```bash
-    npm i & npm start
+    npm i && npm start
     ```
 
 # Testing the bot using Bot Framework Emulator
