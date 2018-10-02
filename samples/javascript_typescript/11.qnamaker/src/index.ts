@@ -32,7 +32,7 @@ const DEV_ENVIRONMENT = 'development';
 // Bot name as defined in .bot file or from runtime.
 // See https://aka.ms/about-bot-file to learn more about .bot files.
 const BOT_CONFIGURATION = (process.env.NODE_ENV || DEV_ENVIRONMENT);
-const QNA_CONFIGURATION = 'qnamakerService';
+const QNA_CONFIGURATION = 'FAQ';
 
 // Get bot endpoint and QnAMaker configuration by service name.
 const endpointConfig = <IEndpointService>botConfig.findServiceByNameOrId(BOT_CONFIGURATION);
