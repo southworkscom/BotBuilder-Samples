@@ -12,7 +12,7 @@ namespace Console_EchoBot
 {
     /// <summary>
     /// Represents a <see cref="BotAdapter"/> that would typically connect a bot to an
-    /// and external service (For example, Skype, Slack, Teams, etc).
+    /// external service (For example, Skype, Slack, Teams, etc).
     /// This implementation interacts with the console.
     /// </summary>
     /// <seealso cref="ITurnContext"/>
