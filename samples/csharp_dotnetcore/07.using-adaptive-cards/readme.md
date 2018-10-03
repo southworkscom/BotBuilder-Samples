@@ -4,6 +4,7 @@
 A bot is an app that users interact with in a conversational way using text, graphics (cards), or speech. It may be a simple question and answer dialog,
 or a sophisticated bot that allows people to interact with services in an intelligent manner using pattern matching,
 state tracking and artificial intelligence techniques well-integrated with existing business services.
+
 ## Adaptive Cards
 Card authors describe their content as a simple JSON object. That content can then be rendered natively inside a host application,
 automatically adapting to the look and feel of the host. For example, Contoso Bot can author an Adaptive Card through the Bot Framework,
@@ -23,16 +24,14 @@ git clone https://github.com/microsoft/botbuilder-samples.git
 - Hit F5
 ## Visual Studio Code
 - Open `botbuilder-samples/samples/csharp_dotnetcore/07.using-adaptive-cards` folder
-- Bring up a terminal, navigate to botbuilder-samples/samples/csharp_dotnetcore/07.using-adaptive-cards
-- Type 'dotnet run'.
+- Bring up a terminal, navigate to `botbuilder-samples/samples/csharp_dotnetcore/07.using-adaptive-cards`
+- Type `dotnet run`.
 ## Update packages
 - In Visual Studio right click on the solution and select "Restore NuGet Packages".
 # Deploy this bot to Azure
-You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. 
+You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on.  Ensure you have [Node.js](https://nodejs.org/) version 8.5 or higher
 
-To install all Bot Builder tools - 
-
-Ensure you have [Node.js](https://nodejs.org/) version 8.5 or higher
+To install all Bot Builder tools
 
 ```bash
 npm i -g msbot chatdown ludown qnamaker luis-apis botdispatch luisgen
