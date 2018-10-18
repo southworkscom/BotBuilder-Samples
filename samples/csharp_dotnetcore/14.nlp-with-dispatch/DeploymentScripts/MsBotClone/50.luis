@@ -115,7 +115,7 @@
       ]
     },
     {
-      "text": "get the forcast for me",
+      "text": "get the forecast for me",
       "intent": "Get Weather Forecast",
       "entities": []
     },

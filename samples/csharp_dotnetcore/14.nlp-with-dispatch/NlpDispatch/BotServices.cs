@@ -13,7 +13,7 @@ namespace NLP_With_Dispatch_Bot
     /// Represents the bot's references to external services.
     ///
     /// For example, Application Insights, Luis models and QnaMaker services
-    /// are kept here (singletons).  These external services are configured
+    /// are kept here (singletons). These external services are configured
     /// using the BotConfigure class (based on the contents of your ".bot" file).
     /// </summary>
     public class BotServices
@@ -32,7 +32,7 @@ namespace NLP_With_Dispatch_Bot
         /// <summary>
         /// Gets the (potential) set of QnA Services used.
         /// Given there can be multiple QnA services used in a single bot,
-        /// QnA is represented as a Dictionary.  This is also modeled in the
+        /// QnA is represented as a Dictionary. This is also modeled in the
         /// ".bot" file since the elements are named (string).
         /// This sample only uses a single QnA instance.
         /// </summary>
@@ -44,7 +44,7 @@ namespace NLP_With_Dispatch_Bot
         /// <summary>
         /// Gets the (potential) set of Luis Services used.
         /// Given there can be multiple Luis services used in a single bot,
-        /// LuisServices is represented as a Dictionary.  This is also modeled in the
+        /// LuisServices is represented as a Dictionary. This is also modeled in the
         /// ".bot" file since the elements are named (string).
         /// This sample only uses a single Luis instance.
         /// </summary>
