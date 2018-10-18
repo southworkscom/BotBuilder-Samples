@@ -31,7 +31,7 @@ git clone https://github.com/Microsoft/botbuilder-samples.git
     ```
     {
       "type": "luis",
-      "name": "LuisBot", //This has to match the value for `LUIS_CONFIGURATION` in the index.js file
+      "name": "LuisBot", //This has to match the values for the LUIS services in the NlpDispatchBot.cs file
       "id": "",
       "appId": "{LuisAppID}",
       "authoringKey": "", //{LuisAuthoringKey} or
