@@ -63,10 +63,13 @@ _**Note**: Make sure the chosen number has SMS capability enabled._
 6 - Back in the bot project, set the credentials in _appsettings.json_.
 
     TwilioNumber (the one obtained in step 3)
-    AccountSID (the one obtained in step 2)
-    AuthToken (the one obtained in step 2)
-    ValidationURL (the one configured in step 5)
+    TwilioAccountSid (the one obtained in step 2)
+    TwilioAuthToken (the one obtained in step 2)
+    TwilioValidationUrl (the one configured in step 5)
 
+    
+*Some important fact is that if ngrok will be used to locally test the bot, `http` should be used instead of the `https` in the URL.*
+    [Read more about this in the Twilio documentation.](https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-csharp-aspnet-core-app-by-validating-incoming-twilio-requests#use-the-filter-attribute-with-our-twilio-webhooks)
 
 ## Deploy the bot to Azure
 
