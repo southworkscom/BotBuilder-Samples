@@ -31,16 +31,7 @@ namespace Microsoft.Bot.Builder.Adapters.Twilio.TestBot.Controllers
         {
             // Delegate the processing of the HTTP POST to the adapter.
             // The adapter will invoke the bot.
-            try
-            {
                 await _adapter.ProcessAsync(Request, Response, _bot, new CancellationToken());
-            }
-            catch (System.Exception e)
-            {
-                System.Console.WriteLine(e);
-                throw;
-            }
-         
         }
     }
 }

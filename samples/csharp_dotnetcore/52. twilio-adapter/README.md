@@ -68,7 +68,7 @@ _**Note**: Make sure the chosen number has SMS capability enabled._
     TwilioValidationUrl (the one configured in step 5)
 
     
-*Some important fact is that if ngrok will be used to locally test the bot, `http` should be used instead of the `https` in the URL.*
+*Some important fact is that if ngrok will be used to test the bot locally, `http` should be used instead of the `https` in the URL.*
     [Read more about this in the Twilio documentation.](https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-csharp-aspnet-core-app-by-validating-incoming-twilio-requests#use-the-filter-attribute-with-our-twilio-webhooks)
 
 ## Deploy the bot to Azure
