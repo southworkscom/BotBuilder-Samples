@@ -18,10 +18,10 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 1 - Clone the repository
 
     ```bash
-    git clone https://github.com/Microsoft/botbuilder-dotnet.git
+    git clone https://github.com/Microsoft/BotBuilder-Samples.git
     ```
 
-2 - In a terminal, navigate to `test/Test Applications/Microsoft.Bot.Builder.Twilio.Sample`
+2 - In a terminal, navigate to `BotBuilder-Samples/samples/csharp_dotnetcore/52. twilio-adapter`
 
 3 - Connect the bot with Twilio by following the instructions below.
 
@@ -38,7 +38,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
   - Launch Visual Studio
   - File -> Open -> Project/Solution
-  - Navigate to `test/Test Applications/Microsoft.Bot.Builder.Twilio.Sample` folder
+  - Navigate to `BotBuilder-Samples/samples/csharp_dotnetcore/52. twilio-adapter` folder
   - Select `Microsoft.Bot.Builder.Twilio.Sample.csproj` file
   - Press <kbd>F5</kbd> to run the project
 

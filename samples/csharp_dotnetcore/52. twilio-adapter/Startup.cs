@@ -22,7 +22,7 @@ namespace Microsoft.Bot.Builder.Adapters.Twilio.TestBot
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // Create the Bot Framework Webex Adapter.
+            // Create the Bot Framework Twilio Adapter.
             services.AddSingleton<IBotFrameworkHttpAdapter, TwilioAdapter>();
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
