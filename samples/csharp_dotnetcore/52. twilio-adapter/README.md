@@ -58,6 +58,9 @@ _**Note**: Make sure the chosen number has SMS capability enabled._
 
 4 - Using a tunneling tool like [Ngrok](https://ngrok.com/download), expose the bot's endpoint.
 
+_**Note**:  Some important fact is that if ngrok will be used to test the bot locally, `http` should be used instead of the `https` in the URL._
+    [Read more about this in the Twilio documentation.](https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-csharp-aspnet-core-app-by-validating-incoming-twilio-requests#use-the-filter-attribute-with-our-twilio-webhooks)
+
 5 - Configure the Messaging Webhook with the https URL generated in the previous step adding '/api/messages' to it.
 
 6 - Back in the bot project, set the credentials in _appsettings.json_.
@@ -68,8 +71,7 @@ _**Note**: Make sure the chosen number has SMS capability enabled._
     TwilioValidationUrl (the one configured in step 5)
 
     
-*Some important fact is that if ngrok will be used to test the bot locally, `http` should be used instead of the `https` in the URL.*
-    [Read more about this in the Twilio documentation.](https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-csharp-aspnet-core-app-by-validating-incoming-twilio-requests#use-the-filter-attribute-with-our-twilio-webhooks)
+
 
 ## Deploy the bot to Azure
 
