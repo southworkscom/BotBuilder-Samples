@@ -1,0 +1,27 @@
+[
+  {
+    "type": "actions",
+    "elements": [
+      {
+        "type": "button",
+        "text": {
+          "type": "plain_text",
+          "emoji": true,
+          "text": "Approve"
+        },
+        "style": "primary",
+        "value": "click_approve"
+      },
+      {
+        "type": "button",
+        "text": {
+          "type": "plain_text",
+          "emoji": true,
+          "text": "Deny"
+        },
+        "style": "danger",
+        "value": "click_deny"
+      }
+    ]
+  }
+]

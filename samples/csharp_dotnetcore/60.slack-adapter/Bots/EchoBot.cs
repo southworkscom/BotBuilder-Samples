@@ -28,7 +28,25 @@ namespace Microsoft.BotBuilderSamples.Bots
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            await turnContext.SendActivityAsync(MessageFactory.Text($"Echo: {turnContext.Activity.Text}"), cancellationToken);
+            if (turnContext.Activity.Text.Contains("testing"))
+            {
+                var interactiveMessage = MessageFactory.Attachment(
+                        CreateInteractiveMessage(
+                            Directory.GetCurrentDirectory() + @"\Resources\blockkit.json"));
+                await turnContext.SendActivityAsync(interactiveMessage, cancellationToken);
+            }
+            else if (turnContext.Activity.Text.Contains("click_approve"))
+            {
+                var activity = MessageFactory.Text("approved");
+                await turnContext.SendActivityAsync(activity, cancellationToken);
+            }
+            else if (turnContext.Activity.Text.Contains("click_deny"))
+            {
+                await turnContext.SendActivityAsync(MessageFactory.Text("denied"), cancellationToken);
+            }
+            else {
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Echo: {turnContext.Activity.Text}"), cancellationToken);
+            }
         }
 
         /// <summary>
