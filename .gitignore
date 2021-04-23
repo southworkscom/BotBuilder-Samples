@@ -296,3 +296,18 @@ rush.json
 /experimental/common/scripts
 /experimental/generation/generator/.rush
 orchestrator.json
+
+# Eclipse
+.metadata
+bin/
+tmp/
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.project
+.factorypath
+.classpath
