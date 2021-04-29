@@ -24,7 +24,6 @@ namespace Microsoft.BotBuilderSamples.SimpleRootBot.Controllers
 
         [HttpPost]
         [HttpGet]
-        [HttpPost("v3/conversations/{conversationId}/activities/{activityId}")]
         public async Task PostAsync()
         {
             // Delegate the processing of the HTTP POST to the adapter.
