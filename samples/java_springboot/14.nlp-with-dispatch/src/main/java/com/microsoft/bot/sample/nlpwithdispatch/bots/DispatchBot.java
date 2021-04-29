@@ -40,13 +40,14 @@ public class DispatchBot extends ActivityHandler {
     protected CompletableFuture<Void> onMessageActivity(TurnContext turnContext) {
         // First, we use the dispatch model to determine which cognitive service (LUS or
         // QnA) to use.
-        RecognizerResult recognizerResult = _botServices.getDispatch().recognize(turnContext).join();
+        
+        return _botServices.getDispatch().recognize(turnContext).thenCompose(recognizerResult -> {
+            // Top intent tell us which cognitive service to use.
+            NamedIntentScore topIntent = ((RecognizerResult) recognizerResult).getTopScoringIntent();
 
-        // Top intent tell us which cognitive service to use.
-        NamedIntentScore topIntent = recognizerResult.getTopScoringIntent();
-
-        // Next, we call the dispatcher with the top intent.
-        return dispatchToTopIntent(turnContext, topIntent.intent, recognizerResult);
+            // Next, we call the dispatcher with the top intent.
+            return dispatchToTopIntent(turnContext, topIntent.intent, recognizerResult).thenApply(result -> null);
+        });
     }
 
     @Override
