@@ -4,11 +4,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Adapters.Slack;
 using Microsoft.Bot.Builder.BotFramework;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core.Skills;
 using Microsoft.Bot.Builder.Skills;
 using Microsoft.Bot.Connector.Authentication;
+using Microsoft.BotBuilderSamples.SimpleRootBot.Adapters;
 using Microsoft.BotBuilderSamples.SimpleRootBot.Authentication;
 using Microsoft.BotBuilderSamples.SimpleRootBot.Bots;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,7 @@ namespace Microsoft.BotBuilderSamples.SimpleRootBot
     public class Startup
     {
         // This method gets called by the runtime. Use this method to add services to the container.
+        [System.Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
@@ -36,6 +39,9 @@ namespace Microsoft.BotBuilderSamples.SimpleRootBot
             // Note: some classes use the base BotAdapter so we add an extra registration that pulls the same instance.
             services.AddSingleton<BotFrameworkHttpAdapter, AdapterWithErrorHandler>();
             services.AddSingleton<BotAdapter>(sp => sp.GetService<BotFrameworkHttpAdapter>());
+
+            // Create the Slack Adapter
+            services.AddSingleton<SlackAdapter, SlackAdapterWithErrorHandler>();
 
             // Register the skills client and skills request handler.
             services.AddSingleton<SkillConversationIdFactoryBase, SkillConversationIdFactory>();

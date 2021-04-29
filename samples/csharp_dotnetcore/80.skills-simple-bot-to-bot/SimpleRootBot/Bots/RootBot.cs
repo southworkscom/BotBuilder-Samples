@@ -22,10 +22,12 @@ namespace Microsoft.BotBuilderSamples.SimpleRootBot.Bots
         private readonly IStatePropertyAccessor<BotFrameworkSkill> _activeSkillProperty;
         private readonly string _botId;
         private readonly ConversationState _conversationState;
+        [Obsolete]
         private readonly SkillHttpClient _skillClient;
         private readonly SkillsConfiguration _skillsConfig;
         private readonly BotFrameworkSkill _targetSkill;
 
+        [Obsolete]
         public RootBot(ConversationState conversationState, SkillsConfiguration skillsConfig, SkillHttpClient skillClient, IConfiguration configuration)
         {
             _conversationState = conversationState ?? throw new ArgumentNullException(nameof(conversationState));
@@ -37,10 +39,6 @@ namespace Microsoft.BotBuilderSamples.SimpleRootBot.Bots
             }
 
             _botId = configuration.GetSection(MicrosoftAppCredentials.MicrosoftAppIdKey)?.Value;
-            if (string.IsNullOrWhiteSpace(_botId))
-            {
-                throw new ArgumentException($"{MicrosoftAppCredentials.MicrosoftAppIdKey} is not set in configuration");
-            }
 
             // We use a single skill in this example.
             var targetSkillId = "EchoSkillBot";

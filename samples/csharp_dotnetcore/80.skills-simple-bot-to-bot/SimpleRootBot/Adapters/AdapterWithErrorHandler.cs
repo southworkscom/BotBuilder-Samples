@@ -15,7 +15,7 @@ using Microsoft.BotBuilderSamples.SimpleRootBot.Bots;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.BotBuilderSamples.SimpleRootBot
+namespace Microsoft.BotBuilderSamples.SimpleRootBot.Adapters
 {
     public class AdapterWithErrorHandler : BotFrameworkHttpAdapter
     {

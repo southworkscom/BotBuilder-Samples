@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleRootBot", "SimpleRootBot\SimpleRootBot.csproj", "{966E5AB4-0697-4F8B-99CE-A80AE262A10A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9DE89313-FEF9-4D37-9A0B-1740EBBCD5B3} = {9DE89313-FEF9-4D37-9A0B-1740EBBCD5B3}
+		{B713363B-F1F4-4286-B18C-BC3CCD167300} = {B713363B-F1F4-4286-B18C-BC3CCD167300}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EchoSkillBot", "EchoSkillBot\EchoSkillBot.csproj", "{5345ACF8-8695-4148-A8A5-44F335450297}"
 EndProject
@@ -11,6 +15,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Builder.Integration.AspNet.Core", "..\..\..\..\botbuilder-dotnet\libraries\integration\Microsoft.Bot.Builder.Integration.AspNet.Core\Microsoft.Bot.Builder.Integration.AspNet.Core.csproj", "{9DE89313-FEF9-4D37-9A0B-1740EBBCD5B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Builder.Adapters.Slack", "..\..\..\..\botbuilder-dotnet\libraries\Adapters\Microsoft.Bot.Builder.Adapters.Slack\Microsoft.Bot.Builder.Adapters.Slack.csproj", "{B713363B-F1F4-4286-B18C-BC3CCD167300}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Builder", "..\..\..\..\botbuilder-dotnet\libraries\Microsoft.Bot.Builder\Microsoft.Bot.Builder.csproj", "{4EE2A35C-9054-4103-8B08-A05DEDD501FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Connector", "..\..\..\..\botbuilder-dotnet\libraries\Microsoft.Bot.Connector\Microsoft.Bot.Connector.csproj", "{F10B4B21-9E18-4BE8-B118-1E7F2A4114A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Streaming", "..\..\..\..\botbuilder-dotnet\libraries\Microsoft.Bot.Streaming\Microsoft.Bot.Streaming.csproj", "{6500A684-C568-41E9-B958-098FD42E713F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +40,26 @@ Global
 		{5345ACF8-8695-4148-A8A5-44F335450297}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5345ACF8-8695-4148-A8A5-44F335450297}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5345ACF8-8695-4148-A8A5-44F335450297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DE89313-FEF9-4D37-9A0B-1740EBBCD5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DE89313-FEF9-4D37-9A0B-1740EBBCD5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DE89313-FEF9-4D37-9A0B-1740EBBCD5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE89313-FEF9-4D37-9A0B-1740EBBCD5B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B713363B-F1F4-4286-B18C-BC3CCD167300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B713363B-F1F4-4286-B18C-BC3CCD167300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B713363B-F1F4-4286-B18C-BC3CCD167300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B713363B-F1F4-4286-B18C-BC3CCD167300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE2A35C-9054-4103-8B08-A05DEDD501FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE2A35C-9054-4103-8B08-A05DEDD501FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE2A35C-9054-4103-8B08-A05DEDD501FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE2A35C-9054-4103-8B08-A05DEDD501FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F10B4B21-9E18-4BE8-B118-1E7F2A4114A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F10B4B21-9E18-4BE8-B118-1E7F2A4114A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F10B4B21-9E18-4BE8-B118-1E7F2A4114A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F10B4B21-9E18-4BE8-B118-1E7F2A4114A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6500A684-C568-41E9-B958-098FD42E713F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6500A684-C568-41E9-B958-098FD42E713F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6500A684-C568-41E9-B958-098FD42E713F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6500A684-C568-41E9-B958-098FD42E713F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
