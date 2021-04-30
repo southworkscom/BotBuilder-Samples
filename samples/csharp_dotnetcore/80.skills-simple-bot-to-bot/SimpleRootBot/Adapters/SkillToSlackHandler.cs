@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
@@ -18,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.BotBuilderSamples.SimpleRootBot.Adapters
 {
-    public class AdapterWithErrorHandler : BotFrameworkHttpAdapter
+    public class SkillToSlackHandler : SkillToSlackAdapter
     {
         private readonly IConfiguration _configuration;
         private readonly ConversationState _conversationState;
@@ -26,8 +23,8 @@ namespace Microsoft.BotBuilderSamples.SimpleRootBot.Adapters
         private readonly SkillHttpClient _skillClient;
         private readonly SkillsConfiguration _skillsConfig;
 
-        public AdapterWithErrorHandler(IConfiguration configuration, ILogger<BotFrameworkHttpAdapter> logger, ConversationState conversationState, SkillHttpClient skillClient = null, SkillsConfiguration skillsConfig = null, SlackAdapter slackAdapter = null)
-            : base(configuration, logger)
+        public SkillToSlackHandler(IConfiguration configuration, ILogger<BotFrameworkHttpAdapter> logger, ConversationState conversationState, SkillHttpClient skillClient = null, SkillsConfiguration skillsConfig = null)
+            : base(configuration)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _conversationState = conversationState ?? throw new ArgumentNullException(nameof(conversationState));

@@ -37,7 +37,7 @@ namespace Microsoft.BotBuilderSamples.SimpleRootBot
 
             // Register the Bot Framework Adapter with error handling enabled.
             // Note: some classes use the base BotAdapter so we add an extra registration that pulls the same instance.
-            services.AddSingleton<BotFrameworkHttpAdapter, AdapterWithErrorHandler>();
+            services.AddSingleton<BotFrameworkHttpAdapter, SkillToSlackHandler>();
             services.AddSingleton<BotAdapter>(sp => sp.GetService<BotFrameworkHttpAdapter>());
 
             // Create the Slack Adapter
