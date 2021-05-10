@@ -23,8 +23,8 @@ namespace Microsoft.BotBuilderSamples.SimpleRootBot.Adapters
         private readonly SkillHttpClient _skillClient;
         private readonly SkillsConfiguration _skillsConfig;
 
-        public SkillToSlackHandler(IConfiguration configuration, ILogger<BotFrameworkHttpAdapter> logger, ConversationState conversationState, SkillHttpClient skillClient = null, SkillsConfiguration skillsConfig = null)
-            : base(configuration)
+        public SkillToSlackHandler(SlackAdapter slackAdapter, IConfiguration configuration, ILogger<BotFrameworkHttpAdapter> logger, ConversationState conversationState, SkillHttpClient skillClient = null, SkillsConfiguration skillsConfig = null)
+            : base(slackAdapter, configuration)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _conversationState = conversationState ?? throw new ArgumentNullException(nameof(conversationState));
